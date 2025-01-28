@@ -12,28 +12,37 @@ export type Database = {
       customers: {
         Row: {
           billing_address: string | null
+          cooking_preferences: Json | null
           created_at: string
           full_name: string | null
           id: string
+          newsletter_subscription: boolean | null
           phone: string | null
+          preferred_cuts: string[] | null
           shipping_address: string | null
           updated_at: string
         }
         Insert: {
           billing_address?: string | null
+          cooking_preferences?: Json | null
           created_at?: string
           full_name?: string | null
           id: string
+          newsletter_subscription?: boolean | null
           phone?: string | null
+          preferred_cuts?: string[] | null
           shipping_address?: string | null
           updated_at?: string
         }
         Update: {
           billing_address?: string | null
+          cooking_preferences?: Json | null
           created_at?: string
           full_name?: string | null
           id?: string
+          newsletter_subscription?: boolean | null
           phone?: string | null
+          preferred_cuts?: string[] | null
           shipping_address?: string | null
           updated_at?: string
         }
@@ -208,6 +217,56 @@ export type Database = {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saved_addresses: {
+        Row: {
+          address_line1: string
+          address_line2: string | null
+          address_type: string
+          city: string
+          created_at: string | null
+          customer_id: string
+          id: string
+          is_default: boolean | null
+          postal_code: string
+          state: string
+          updated_at: string | null
+        }
+        Insert: {
+          address_line1: string
+          address_line2?: string | null
+          address_type: string
+          city: string
+          created_at?: string | null
+          customer_id: string
+          id?: string
+          is_default?: boolean | null
+          postal_code: string
+          state: string
+          updated_at?: string | null
+        }
+        Update: {
+          address_line1?: string
+          address_line2?: string | null
+          address_type?: string
+          city?: string
+          created_at?: string | null
+          customer_id?: string
+          id?: string
+          is_default?: boolean | null
+          postal_code?: string
+          state?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_addresses_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
             referencedColumns: ["id"]
           },
         ]
