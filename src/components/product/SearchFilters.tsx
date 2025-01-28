@@ -6,17 +6,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Database } from "@/integrations/supabase/types";
-
-type ProductCategory = Database["public"]["Enums"]["product_category"];
+import { ProductCategory, SortOption } from "@/types/product";
 
 interface SearchFiltersProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   selectedCategory: ProductCategory | "all";
   setSelectedCategory: (category: ProductCategory | "all") => void;
-  sortBy: "price-asc" | "price-desc" | "name";
-  setSortBy: (sort: "price-asc" | "price-desc" | "name") => void;
+  sortBy: SortOption;
+  setSortBy: (sort: SortOption) => void;
 }
 
 const SearchFilters = ({
@@ -50,7 +48,7 @@ const SearchFilters = ({
         </SelectContent>
       </Select>
 
-      <Select value={sortBy} onValueChange={(value: "price-asc" | "price-desc" | "name") => setSortBy(value)}>
+      <Select value={sortBy} onValueChange={(value: SortOption) => setSortBy(value)}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
