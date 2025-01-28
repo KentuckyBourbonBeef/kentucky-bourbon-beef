@@ -3,14 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 import { Product } from "@/types/product";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
-  const { addToCart } = useCart();
+  const { addItem } = useCart();
 
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", id],
@@ -48,7 +48,7 @@ const ProductDetail = () => {
   }
 
   const handleAddToCart = () => {
-    addToCart(product);
+    addItem(product);
     toast({
       title: "Added to cart",
       description: `${product.name} has been added to your cart.`,
