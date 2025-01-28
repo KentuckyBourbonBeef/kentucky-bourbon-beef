@@ -10,7 +10,7 @@ const Process = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4">Master Selection</h3>
             <p className="text-bourbon-100 leading-relaxed">
-              Our master butchers hand-select only the finest Black Angus beef from Kentucky's premium herds. Each cut is chosen for its exceptional marbling, rich color, and perfect texture - the foundation for an extraordinary bourbon-finishing process.
+              Our master butchers hand-select only the finest Black Angus beef from Kentucky's premium herds. Each cut is chosen for its exceptional marbling, rich color, and perfect texture - the foundation for our unique Bourbon Grains finishing process.
             </p>
           </div>
           <div className="text-center group">
@@ -19,7 +19,7 @@ const Process = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4">Bourbon-Finishing Excellence</h3>
             <p className="text-bourbon-100 leading-relaxed">
-              Using a proprietary process developed with Kentucky's finest distilleries, we finish our cattle on nutrient-rich Bourbon Grains. This sustainable practice not only reduces waste but creates an exceptional flavor profile with subtle bourbon-inspired notes while naturally enhancing tenderness.
+              Using nutrient-rich Bourbon Grains from Kentucky's finest distilleries, we finish our cattle through a proprietary process that enhances tenderness and creates an exceptional flavor profile. This sustainable practice supports local farmers while reducing industry waste.
             </p>
           </div>
           <div className="text-center group">
@@ -28,13 +28,13 @@ const Process = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4">Peak Perfection</h3>
             <p className="text-bourbon-100 leading-relaxed">
-              At the precise moment of peak flavor development, our artisans hand-cut and package your selection. Each piece is vacuum-sealed to preserve its exceptional taste and delivered fresh to your door in our premium temperature-controlled packaging, ready to become the centerpiece of an unforgettable dining experience.
+              At the precise moment of peak flavor development, our artisans hand-cut and package your selection. Each piece is vacuum-sealed to preserve its exceptional taste and delivered fresh to your door in our premium temperature-controlled packaging.
             </p>
           </div>
         </div>
         <div className="mt-16 text-center">
           <p className="text-xl text-bourbon-100 max-w-2xl mx-auto italic">
-            "Where Kentucky's finest traditions meet: premium beef finished with bourbon stillage from world-class distilleries. A taste of luxury you won't find anywhere else."
+            "Where Kentucky's finest traditions meet: premium beef finished with nutrient-rich Bourbon Grains from world-class distilleries. A taste of luxury you won't find anywhere else."
           </p>
         </div>
       </div>
