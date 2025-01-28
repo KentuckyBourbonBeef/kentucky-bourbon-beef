@@ -1,0 +1,24 @@
+import { Button } from "@/components/ui/button";
+
+const Hero = () => {
+  return (
+    <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1')] bg-cover bg-center">
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+      <div className="relative z-10 text-center px-4 animate-fadeIn">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+          Kentucky Bourbon Beef
+        </h1>
+        <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
+          Experience the perfect marriage of Kentucky's finest traditions: premium beef aged in bourbon-barrel environments.
+        </p>
+        <Button size="lg" className="bg-bourbon-600 hover:bg-bourbon-700 text-white">
+          Shop Premium Cuts
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default Hero;
