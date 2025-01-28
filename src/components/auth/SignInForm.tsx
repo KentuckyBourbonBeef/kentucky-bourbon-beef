@@ -47,7 +47,13 @@ export const SignInForm = ({ isLoading, setIsLoading }: SignInFormProps) => {
       });
 
       if (error) {
-        if (error.message === "Invalid login credentials") {
+        if (error.message === "Email not confirmed") {
+          toast({
+            variant: "destructive",
+            title: "Email not verified",
+            description: "Please check your email and click the verification link to complete your registration.",
+          });
+        } else if (error.message === "Invalid login credentials") {
           toast({
             variant: "destructive",
             title: "Sign in failed",
