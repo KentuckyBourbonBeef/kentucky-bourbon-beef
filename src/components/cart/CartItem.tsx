@@ -10,7 +10,7 @@ interface CartItemProps {
 
 export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps) {
   return (
-    <div className="flex items-center space-x-4 border-b pb-4">
+    <div className="flex items-center space-x-4 border-b pb-4 animate-fade-in">
       <div className="aspect-square h-16 w-16 overflow-hidden rounded-md">
         <img
           src={
@@ -18,7 +18,7 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
             "https://images.unsplash.com/photo-1615937722923-67f6deaf2cc9"
           }
           alt={item.name}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform hover:scale-105"
         />
       </div>
       <div className="flex-1">
@@ -32,6 +32,7 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
           variant="outline"
           size="icon"
           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+          className="transition-colors"
         >
           <Minus className="h-4 w-4" />
         </Button>
@@ -40,6 +41,7 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
           variant="outline"
           size="icon"
           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+          className="transition-colors"
         >
           <Plus className="h-4 w-4" />
         </Button>
@@ -47,6 +49,7 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
           variant="ghost"
           size="icon"
           onClick={() => onRemoveItem(item.id)}
+          className="text-red-500 hover:text-red-600 transition-colors"
         >
           <Trash2 className="h-4 w-4" />
         </Button>

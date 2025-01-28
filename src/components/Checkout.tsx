@@ -4,7 +4,11 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { CheckoutForm } from "./checkout/CheckoutForm";
 
-export function Checkout() {
+interface CheckoutProps {
+  onCancel?: () => void;
+}
+
+export function Checkout({ onCancel }: CheckoutProps) {
   const { items, total, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -74,12 +78,7 @@ export function Checkout() {
 
       toast.success("Order placed successfully!");
       clearCart();
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        shippingAddress: "",
-      });
+      onCancel?.();
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error("Failed to place order. Please try again.");
