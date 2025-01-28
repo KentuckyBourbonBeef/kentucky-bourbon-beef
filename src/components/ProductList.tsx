@@ -16,8 +16,18 @@ const ProductList = () => {
   const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "name">("name");
 
   const filteredProducts = products?.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    // Normalize strings for comparison by removing extra spaces and converting to lowercase
+    const normalizedSearch = searchQuery.toLowerCase().trim();
+    const normalizedName = product.name.toLowerCase().trim();
+    const normalizedDescription = product.description?.toLowerCase().trim() || "";
+    const normalizedCategory = product.category.toLowerCase().trim();
+
+    // Check if search query matches any part of the product data
+    const matchesSearch = 
+      normalizedName.includes(normalizedSearch) ||
+      normalizedDescription.includes(normalizedSearch) ||
+      normalizedCategory.includes(normalizedSearch);
+    
     const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -27,7 +37,7 @@ const ProductList = () => {
       case "price-asc":
         return Number(a.price) - Number(b.price);
       case "price-desc":
-        return Number(b.price) - Number(a.price);
+        return Number(b.price) - Number(b.price);
       case "name":
         return a.name.localeCompare(b.name);
       default:
@@ -59,15 +69,23 @@ const ProductList = () => {
         setSortBy={setSortBy}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {sortedProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onAddToCart={addItem}
-          />
-        ))}
-      </div>
+      {sortedProducts.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-lg text-gray-600">
+            No products found matching "{searchQuery}". Try adjusting your search or filters.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {sortedProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAddToCart={addItem}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
