@@ -22,21 +22,25 @@ const ProductList = () => {
     const normalizedDescription = product.description?.toLowerCase().trim() || "";
     const normalizedCategory = product.category.toLowerCase().trim();
 
-    console.log('Search term:', normalizedSearch);
-    console.log('Product name:', normalizedName);
-    console.log('Product category:', normalizedCategory);
-
     // If search is empty, don't filter by search
     if (!normalizedSearch) return true;
 
-    // Simple includes check for partial matches
-    const matchesName = normalizedName.includes(normalizedSearch);
-    const matchesDescription = normalizedDescription.includes(normalizedSearch);
-    const matchesCategory = normalizedCategory.includes(normalizedSearch);
+    // Function to check if a search term partially matches any word in the target
+    const partialMatch = (searchTerm: string, target: string) => {
+      const searchWords = searchTerm.split(/\s+/);
+      const targetWords = target.split(/\s+/);
+      
+      return searchWords.every(searchWord => 
+        targetWords.some(targetWord => 
+          targetWord.includes(searchWord) || searchWord.includes(targetWord)
+        )
+      );
+    };
 
-    console.log('Matches name:', matchesName);
-    console.log('Matches description:', matchesDescription);
-    console.log('Matches category:', matchesCategory);
+    // Check for partial matches in name, description, and category
+    const matchesName = partialMatch(normalizedSearch, normalizedName);
+    const matchesDescription = partialMatch(normalizedSearch, normalizedDescription);
+    const matchesCategory = partialMatch(normalizedSearch, normalizedCategory);
 
     const matches = matchesName || matchesDescription || matchesCategory;
     const categoryFilter = selectedCategory === "all" || product.category === selectedCategory;
