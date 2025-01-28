@@ -8,6 +8,7 @@ import { Session } from "@supabase/supabase-js";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import ProductDetail from "./pages/ProductDetail";
 import { supabase } from "./integrations/supabase/client";
 import { CartProvider } from "./contexts/CartContext";
 
@@ -56,6 +57,10 @@ const App = () => {
               <Route
                 path="/"
                 element={session ? <Index /> : <Navigate to="/auth" />}
+              />
+              <Route
+                path="/product/:id"
+                element={session ? <ProductDetail /> : <Navigate to="/auth" />}
               />
               <Route
                 path="/auth"
