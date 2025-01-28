@@ -14,8 +14,19 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | "all">("all");
   const [sortBy, setSortBy] = useState<SortOption>("name");
 
+  console.log('ProductList render:', { 
+    productsLoaded: !!products, 
+    searchQuery, 
+    selectedCategory 
+  });
+
   const filteredProducts = filterProducts(products || [], searchQuery, selectedCategory);
   const sortedProducts = sortProducts(filteredProducts || [], sortBy);
+
+  console.log('After filtering and sorting:', { 
+    filteredCount: filteredProducts.length,
+    sortedCount: sortedProducts.length 
+  });
 
   if (isLoading) {
     return (

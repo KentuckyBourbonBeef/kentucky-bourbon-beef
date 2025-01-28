@@ -25,12 +25,18 @@ const SearchFilters = ({
   sortBy,
   setSortBy,
 }: SearchFiltersProps) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    console.log('Search input changed:', value);
+    setSearchQuery(value);
+  };
+
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-8">
       <Input
         placeholder="Search products..."
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={handleSearchChange}
         className="max-w-xs"
       />
       
