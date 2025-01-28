@@ -1,6 +1,13 @@
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
+  const scrollToProducts = () => {
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1')] bg-cover bg-center">
@@ -13,7 +20,11 @@ const Hero = () => {
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
           Experience the perfect marriage of Kentucky's finest traditions: premium beef aged in bourbon-barrel environments.
         </p>
-        <Button size="lg" className="bg-bourbon-600 hover:bg-bourbon-700 text-white">
+        <Button 
+          size="lg" 
+          className="bg-bourbon-600 hover:bg-bourbon-700 text-white"
+          onClick={scrollToProducts}
+        >
           Shop Premium Cuts
         </Button>
       </div>
