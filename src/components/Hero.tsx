@@ -14,7 +14,7 @@ const Hero = () => {
           Kentucky Bourbon Beef
         </h1>
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
-          Experience the heritage of Kentucky with our artisanally crafted beef, finished with Bourbon Grains from world-class distilleries. Each cut is infused with subtle bourbon-inspired flavors, creating a one-of-a-kind culinary experience.
+          Our beef is crafted with the same care and tradition as Kentucky bourbon, using Bourbon Grains from world-class distilleries to enhance its natural flavors, creating a one-of-a-kind culinary experience.
         </p>
         <Button 
           size="lg" 
