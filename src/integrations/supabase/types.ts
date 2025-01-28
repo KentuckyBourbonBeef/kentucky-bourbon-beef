@@ -125,11 +125,13 @@ export type Database = {
       products: {
         Row: {
           aging_duration: number | null
+          aging_tier: string | null
           category: Database["public"]["Enums"]["product_category"]
           created_at: string
           description: string | null
           id: string
           image_url: string | null
+          is_bdc_certified: boolean | null
           name: string
           price: number
           stock_quantity: number
@@ -137,11 +139,13 @@ export type Database = {
         }
         Insert: {
           aging_duration?: number | null
+          aging_tier?: string | null
           category: Database["public"]["Enums"]["product_category"]
           created_at?: string
           description?: string | null
           id?: string
           image_url?: string | null
+          is_bdc_certified?: boolean | null
           name: string
           price: number
           stock_quantity?: number
@@ -149,11 +153,13 @@ export type Database = {
         }
         Update: {
           aging_duration?: number | null
+          aging_tier?: string | null
           category?: Database["public"]["Enums"]["product_category"]
           created_at?: string
           description?: string | null
           id?: string
           image_url?: string | null
+          is_bdc_certified?: boolean | null
           name?: string
           price?: number
           stock_quantity?: number
