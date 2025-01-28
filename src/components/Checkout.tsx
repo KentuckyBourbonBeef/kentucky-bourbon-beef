@@ -28,7 +28,10 @@ export function Checkout() {
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("User not authenticated");
+      if (!user) {
+        toast.error("Please sign in to place an order");
+        return;
+      }
 
       const { data: customerData, error: customerError } = await supabase
         .from("customers")
