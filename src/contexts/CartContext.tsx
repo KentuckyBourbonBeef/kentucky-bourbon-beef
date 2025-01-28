@@ -4,7 +4,7 @@ import { Tables } from "@/integrations/supabase/types";
 
 type Product = Tables<"products">;
 
-interface CartItem extends Product {
+export interface CartItem extends Product {
   quantity: number;
 }
 
