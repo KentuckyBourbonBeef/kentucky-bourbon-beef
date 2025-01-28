@@ -3,7 +3,6 @@ import { useProducts } from "@/hooks/use-products";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 import {
   Select,
   SelectContent,
@@ -12,12 +11,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Database } from "@/integrations/supabase/types";
+import { useCart } from "@/contexts/CartContext";
+import { Cart } from "./Cart";
 
 type ProductCategory = Database["public"]["Enums"]["product_category"];
 
 const ProductList = () => {
   const { data: products, isLoading } = useProducts();
-  const { toast } = useToast();
+  const { addItem } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | "all">("all");
   const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "name">("name");
@@ -52,7 +53,10 @@ const ProductList = () => {
 
   return (
     <section className="container py-8">
-      <h2 className="text-4xl font-bold mb-8">Our Premium Cuts</h2>
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-4xl font-bold">Our Premium Cuts</h2>
+        <Cart />
+      </div>
       
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <Input
@@ -105,7 +109,7 @@ const ProductList = () => {
               <CardDescription>{product.description}</CardDescription>
               <div className="mt-4 flex justify-between items-center">
                 <p className="text-xl font-semibold text-bourbon-800">
-                  ${product.price}
+                  ${Number(product.price).toFixed(2)}
                 </p>
                 <span className="text-sm text-gray-600 capitalize">
                   {product.category}
@@ -120,12 +124,7 @@ const ProductList = () => {
             <CardFooter>
               <Button 
                 className="w-full bg-bourbon-600 hover:bg-bourbon-700"
-                onClick={() => {
-                  toast({
-                    title: "Added to cart",
-                    description: `${product.name} has been added to your cart.`,
-                  });
-                }}
+                onClick={() => addItem(product)}
               >
                 Add to Cart
               </Button>

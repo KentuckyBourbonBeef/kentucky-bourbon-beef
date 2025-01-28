@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import { supabase } from "./integrations/supabase/client";
+import { CartProvider } from "./contexts/CartContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,21 +48,23 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={session ? <Index /> : <Navigate to="/auth" />}
-            />
-            <Route
-              path="/auth"
-              element={!session ? <Auth /> : <Navigate to="/" />}
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <CartProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={session ? <Index /> : <Navigate to="/auth" />}
+              />
+              <Route
+                path="/auth"
+                element={!session ? <Auth /> : <Navigate to="/" />}
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
