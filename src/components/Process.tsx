@@ -19,7 +19,7 @@ const Process = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4">Bourbon-Finishing Excellence</h3>
             <p className="text-bourbon-100 leading-relaxed">
-              Using a proprietary process developed with Kentucky's finest distilleries, we finish our premium beef with bourbon stillage - the nutrient-rich grains left after distillation. This unique finishing process infuses subtle bourbon-inspired flavors while enhancing the natural tenderness of the meat.
+              Using a proprietary process developed with Kentucky's finest distilleries, we finish our cattle on nutrient-rich Bourbon Grains. This sustainable practice not only reduces waste but creates an exceptional flavor profile with subtle bourbon-inspired notes while naturally enhancing tenderness.
             </p>
           </div>
           <div className="text-center group">

@@ -16,7 +16,7 @@ const FAQ = () => {
           <AccordionItem value="item-1">
             <AccordionTrigger>What makes bourbon-aged beef special?</AccordionTrigger>
             <AccordionContent>
-              Our bourbon aging process infuses the beef with subtle flavors of vanilla, oak, and caramel while naturally tenderizing the meat. This unique process, combined with our premium cuts, creates an unparalleled dining experience.
+              Our cattle are finished on nutrient-rich Bourbon Grains, which naturally enhances tenderness and infuses the beef with subtle bourbon-inspired flavors. This sustainable process, combined with our premium cuts, creates an unparalleled dining experience while supporting eco-friendly farming practices.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">

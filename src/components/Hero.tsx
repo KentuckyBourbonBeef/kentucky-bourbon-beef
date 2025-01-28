@@ -14,7 +14,7 @@ const Hero = () => {
           Kentucky Bourbon Beef
         </h1>
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
-          Experience the perfect marriage of Kentucky's finest traditions: premium beef finished with bourbon stillage from world-class distilleries.
+          Experience the perfect marriage of Kentucky's finest traditions: premium beef finished with nutrient-rich Bourbon Grains, creating an exceptionally tender and flavorful dining experience.
         </p>
         <Button 
           size="lg" 
