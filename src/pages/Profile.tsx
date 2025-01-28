@@ -6,11 +6,15 @@ import PersonalInfo from "@/components/profile/PersonalInfo";
 import AddressBook from "@/components/profile/AddressBook";
 import OrderHistory from "@/components/profile/OrderHistory";
 import Preferences from "@/components/profile/Preferences";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [customerData, setCustomerData] = useState<any>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCustomerData = async () => {
@@ -49,33 +53,68 @@ const Profile = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-bourbon-900">My Account</h1>
-      
-      <Tabs defaultValue="personal" className="space-y-6">
-        <TabsList className="bg-bourbon-100">
-          <TabsTrigger value="personal">Personal Info</TabsTrigger>
-          <TabsTrigger value="addresses">Addresses</TabsTrigger>
-          <TabsTrigger value="orders">Orders</TabsTrigger>
-          <TabsTrigger value="preferences">Preferences</TabsTrigger>
-        </TabsList>
+    <div className="min-h-screen bg-bourbon-50/50">
+      <div className="container mx-auto px-4 py-8 animate-fadeIn">
+        {/* Back Button */}
+        <Button
+          variant="ghost"
+          className="mb-6 text-bourbon-700 hover:text-bourbon-900 hover:bg-bourbon-100"
+          onClick={() => navigate("/")}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Home
+        </Button>
 
-        <TabsContent value="personal">
-          <PersonalInfo customerData={customerData} setCustomerData={setCustomerData} />
-        </TabsContent>
+        <h1 className="text-4xl font-serif font-bold mb-2 text-bourbon-900">My Account</h1>
+        <p className="text-bourbon-600 mb-8">Manage your profile, addresses, and preferences</p>
+        
+        <Tabs defaultValue="personal" className="space-y-8">
+          <TabsList className="bg-bourbon-100 p-1 space-x-1">
+            <TabsTrigger 
+              value="personal"
+              className="data-[state=active]:bg-white data-[state=active]:text-bourbon-900"
+            >
+              Personal Info
+            </TabsTrigger>
+            <TabsTrigger 
+              value="addresses"
+              className="data-[state=active]:bg-white data-[state=active]:text-bourbon-900"
+            >
+              Addresses
+            </TabsTrigger>
+            <TabsTrigger 
+              value="orders"
+              className="data-[state=active]:bg-white data-[state=active]:text-bourbon-900"
+            >
+              Orders
+            </TabsTrigger>
+            <TabsTrigger 
+              value="preferences"
+              className="data-[state=active]:bg-white data-[state=active]:text-bourbon-900"
+            >
+              Preferences
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="addresses">
-          <AddressBook customerId={customerData.id} />
-        </TabsContent>
+          <div className="bg-white rounded-lg shadow-sm p-6 border border-bourbon-100">
+            <TabsContent value="personal">
+              <PersonalInfo customerData={customerData} setCustomerData={setCustomerData} />
+            </TabsContent>
 
-        <TabsContent value="orders">
-          <OrderHistory customerId={customerData.id} />
-        </TabsContent>
+            <TabsContent value="addresses">
+              <AddressBook customerId={customerData.id} />
+            </TabsContent>
 
-        <TabsContent value="preferences">
-          <Preferences customerData={customerData} setCustomerData={setCustomerData} />
-        </TabsContent>
-      </Tabs>
+            <TabsContent value="orders">
+              <OrderHistory customerId={customerData.id} />
+            </TabsContent>
+
+            <TabsContent value="preferences">
+              <Preferences customerData={customerData} setCustomerData={setCustomerData} />
+            </TabsContent>
+          </div>
+        </Tabs>
+      </div>
     </div>
   );
 };
