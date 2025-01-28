@@ -50,7 +50,7 @@ const FeaturedCuts = () => {
                         BDC - Butcher Distiller's Cut™
                         <span className="invisible group-hover:visible absolute left-0 top-full mt-2 w-64 p-2 bg-white text-bourbon-800 text-xs rounded shadow-lg">
                           Our Butcher Distiller's Cut™ beef is uniquely finished with nutrient-rich Bourbon Grains, 
-                          creating a distinctly rich Kentucky flavor profile while supporting sustainable farming practices.
+                          creating exceptionally tender beef with subtle bourbon-inspired flavors while supporting sustainable farming practices.
                         </span>
                       </span>
                     </Badge>

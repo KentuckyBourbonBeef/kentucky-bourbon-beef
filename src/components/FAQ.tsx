@@ -33,7 +33,7 @@ const FAQ = () => {
           <AccordionItem value="item-5">
             <AccordionTrigger>What makes your process sustainable?</AccordionTrigger>
             <AccordionContent>
-              Our innovative approach uses nutrient-rich Bourbon Grains from Kentucky's distilleries as cattle feed, which would otherwise be waste product. This practice not only reduces environmental impact but also creates a unique partnership between Kentucky's bourbon and beef industries, supporting local farmers and distillers while producing exceptional beef.
+              Our innovative approach uses nutrient-rich Bourbon Grains from Kentucky's finest distilleries as cattle feed. This sustainable practice creates a unique partnership between Kentucky's bourbon and beef industries, supporting local farmers and distillers while producing exceptionally tender and flavorful beef with subtle bourbon-inspired notes.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
