@@ -22,29 +22,26 @@ const ProductList = () => {
     const normalizedDescription = product.description?.toLowerCase().trim() || "";
     const normalizedCategory = product.category.toLowerCase().trim();
 
+    console.log('Search term:', normalizedSearch);
+    console.log('Product name:', normalizedName);
+    console.log('Product category:', normalizedCategory);
+
     // If search is empty, don't filter by search
     if (!normalizedSearch) return true;
 
-    // Function to check if a search term partially matches any word in the target
-    const partialMatch = (searchTerm: string, target: string) => {
-      // If the search term is very short (1-2 chars), require it to be the start of a word
-      if (searchTerm.length <= 2) {
-        return target.split(/\s+/).some(word => word.startsWith(searchTerm));
-      }
-      // For longer search terms, allow partial matches within words
-      return target.includes(searchTerm);
-    };
+    // Simple includes check for partial matches
+    const matchesName = normalizedName.includes(normalizedSearch);
+    const matchesDescription = normalizedDescription.includes(normalizedSearch);
+    const matchesCategory = normalizedCategory.includes(normalizedSearch);
 
-    // Split search into words and check if each word partially matches
-    const searchWords = normalizedSearch.split(/\s+/);
-    const matchesSearch = searchWords.every(word => 
-      partialMatch(word, normalizedName) ||
-      partialMatch(word, normalizedDescription) ||
-      partialMatch(word, normalizedCategory)
-    );
-    
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    console.log('Matches name:', matchesName);
+    console.log('Matches description:', matchesDescription);
+    console.log('Matches category:', matchesCategory);
+
+    const matches = matchesName || matchesDescription || matchesCategory;
+    const categoryFilter = selectedCategory === "all" || product.category === selectedCategory;
+
+    return matches && categoryFilter;
   });
 
   const sortedProducts = [...(filteredProducts || [])].sort((a, b) => {
