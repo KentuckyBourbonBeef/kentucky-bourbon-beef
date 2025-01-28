@@ -22,11 +22,17 @@ const ProductList = () => {
     const normalizedDescription = product.description?.toLowerCase().trim() || "";
     const normalizedCategory = product.category.toLowerCase().trim();
 
+    // If search is empty, don't filter by search
+    if (!normalizedSearch) return true;
+
     // Check if search query matches any part of the product data
-    const matchesSearch = 
-      normalizedName.includes(normalizedSearch) ||
-      normalizedDescription.includes(normalizedSearch) ||
-      normalizedCategory.includes(normalizedSearch);
+    // Split search query into words and check if all words are present
+    const searchWords = normalizedSearch.split(/\s+/);
+    const matchesSearch = searchWords.every(word => 
+      normalizedName.includes(word) ||
+      normalizedDescription.includes(word) ||
+      normalizedCategory.includes(word)
+    );
     
     const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -37,7 +43,7 @@ const ProductList = () => {
       case "price-asc":
         return Number(a.price) - Number(b.price);
       case "price-desc":
-        return Number(b.price) - Number(b.price);
+        return Number(b.price) - Number(a.price);
       case "name":
         return a.name.localeCompare(b.name);
       default:
