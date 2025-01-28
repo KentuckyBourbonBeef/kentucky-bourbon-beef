@@ -9,7 +9,7 @@ const FAQ = () => {
           <AccordionItem value="item-1">
             <AccordionTrigger>What makes Kentucky Bourbon Beef special?</AccordionTrigger>
             <AccordionContent>
-              Our cattle are finished on nutrient-rich Bourbon Grains, which naturally enhances tenderness and creates an exceptional flavor profile. This sustainable process not only produces premium quality beef but also supports eco-friendly farming practices by reducing waste from Kentucky's bourbon industry.
+              Our cattle are finished on nutrient-rich Bourbon Grains, which naturally enhances tenderness and creates an exceptional flavor profile. This sustainable process not only produces premium quality beef but also supports eco-friendly farming practices by repurposing valuable resources from Kentucky's bourbon industry.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
