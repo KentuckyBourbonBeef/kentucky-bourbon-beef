@@ -14,7 +14,7 @@ const Hero = () => {
           Kentucky Bourbon Beef
         </h1>
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
-          The Bourbon Grains finishing process infuses our beef with subtle bourbon-inspired flavors, creating a one-of-a-kind culinary experience.
+          Hand-selected and carefully finished with nutrient-rich Bourbon Grains, our beef develops subtle bourbon-inspired flavors that create a truly remarkable culinary experience.
         </p>
         <Button 
           size="lg" 

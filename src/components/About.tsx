@@ -9,7 +9,7 @@ const About = () => {
               For generations, Kentucky has been home to two great traditions: exceptional bourbon and premium beef. At Kentucky Bourbon Beef, we've united these traditions to create something extraordinary.
             </p>
             <p className="text-lg text-gray-700">
-              The Bourbon Grains finishing process infuses our beef with subtle bourbon-inspired flavors, creating a one-of-a-kind culinary experience. This unique approach celebrates Kentucky's rich heritage, combining the traditions of both exceptional bourbon and premium beef craftsmanship.
+              Through our meticulous Bourbon Grains finishing process, each cut of beef is carefully nurtured to develop subtle bourbon-inspired flavors. This time-honored approach celebrates Kentucky's rich heritage, bringing together the masterful traditions of both exceptional bourbon and premium beef craftsmanship.
             </p>
           </div>
           <div className="relative">
