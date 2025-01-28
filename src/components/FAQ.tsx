@@ -9,7 +9,7 @@ const FAQ = () => {
           <AccordionItem value="item-1">
             <AccordionTrigger>What makes Kentucky Bourbon Beef special?</AccordionTrigger>
             <AccordionContent>
-              Our cattle are finished on nutrient-rich Bourbon Grains, which naturally enhances tenderness and creates an exceptional flavor profile. This sustainable process not only produces premium quality beef but also supports eco-friendly farming practices by repurposing valuable resources from Kentucky's bourbon industry.
+              Our cattle are finished on nutrient-rich Bourbon Grains, a valuable coproduct of Kentucky's bourbon production. These grains naturally enhance tenderness and create an exceptional flavor profile. This sustainable process produces premium quality beef while supporting eco-friendly farming practices by utilizing these prized coproducts from Kentucky's bourbon industry.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
@@ -33,7 +33,7 @@ const FAQ = () => {
           <AccordionItem value="item-5">
             <AccordionTrigger>What makes your process sustainable?</AccordionTrigger>
             <AccordionContent>
-              Our innovative approach uses nutrient-rich Bourbon Grains from Kentucky's finest distilleries as cattle feed. This sustainable practice creates a unique partnership between Kentucky's bourbon and beef industries, supporting local farmers and distillers while producing exceptionally tender and flavorful beef with subtle bourbon-inspired notes.
+              Our innovative approach uses Bourbon Grains, a nutrient-rich coproduct from Kentucky's finest distilleries, as premium cattle feed. This sustainable practice creates a unique partnership between Kentucky's bourbon and beef industries, supporting local farmers and distillers while producing exceptionally tender and flavorful beef with subtle bourbon-inspired notes. By utilizing these valuable coproducts, we're creating a more sustainable food system that benefits both industries.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
