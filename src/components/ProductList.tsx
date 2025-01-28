@@ -25,13 +25,22 @@ const ProductList = () => {
     // If search is empty, don't filter by search
     if (!normalizedSearch) return true;
 
-    // Check if search query matches any part of the product data
-    // Split search query into words and check if all words are present
+    // Function to check if a search term partially matches any word in the target
+    const partialMatch = (searchTerm: string, target: string) => {
+      // If the search term is very short (1-2 chars), require it to be the start of a word
+      if (searchTerm.length <= 2) {
+        return target.split(/\s+/).some(word => word.startsWith(searchTerm));
+      }
+      // For longer search terms, allow partial matches within words
+      return target.includes(searchTerm);
+    };
+
+    // Split search into words and check if each word partially matches
     const searchWords = normalizedSearch.split(/\s+/);
     const matchesSearch = searchWords.every(word => 
-      normalizedName.includes(word) ||
-      normalizedDescription.includes(word) ||
-      normalizedCategory.includes(word)
+      partialMatch(word, normalizedName) ||
+      partialMatch(word, normalizedDescription) ||
+      partialMatch(word, normalizedCategory)
     );
     
     const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
