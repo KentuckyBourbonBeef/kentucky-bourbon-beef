@@ -30,14 +30,17 @@ const ProductList = () => {
 
   if (isLoading) {
     return (
-      <div className="container py-8">
+      <section id="products" className="container py-8">
         <h2 className="text-3xl font-bold mb-8">Loading Products...</h2>
-      </div>
+      </section>
     );
   }
 
   return (
-    <section id="products" className="container py-8">
+    <section 
+      id="products" 
+      className="container py-8 scroll-mt-20" // Added scroll-mt-20 for better scroll positioning
+    >
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-4xl font-bold">Our Premium Cuts</h2>
         <Cart />

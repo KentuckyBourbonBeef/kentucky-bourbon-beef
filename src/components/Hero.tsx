@@ -1,12 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { useScrollToSection } from "@/hooks/use-scroll";
 
 const Hero = () => {
-  const scrollToProducts = () => {
-    const productsSection = document.getElementById('products');
-    if (productsSection) {
-      productsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const scrollToSection = useScrollToSection();
 
   return (
     <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
@@ -23,7 +19,7 @@ const Hero = () => {
         <Button 
           size="lg" 
           className="bg-bourbon-600 hover:bg-bourbon-700 text-white"
-          onClick={scrollToProducts}
+          onClick={() => scrollToSection('products')}
         >
           Shop Premium Cuts
         </Button>
