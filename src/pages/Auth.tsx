@@ -84,12 +84,22 @@ const Auth = () => {
   };
 
   return (
-    <div className="container mx-auto flex min-h-screen items-center justify-center px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl font-bold">
-            Welcome to Kentucky Bourbon Beef
+    <div 
+      className="min-h-screen flex items-center justify-center px-4 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: 'url("https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80")',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundBlendMode: 'overlay',
+      }}
+    >
+      <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm">
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-center text-3xl font-bold text-bourbon-800">
+            Kentucky Bourbon Beef
           </CardTitle>
+          <p className="text-center text-muted-foreground">
+            Premium dry-aged beef with bourbon heritage
+          </p>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin" className="w-full">
@@ -139,7 +149,7 @@ const Auth = () => {
                   />
                   <Button
                     type="submit"
-                    className="w-full"
+                    className="w-full bg-bourbon-600 hover:bg-bourbon-700"
                     disabled={isLoading}
                   >
                     {isLoading ? "Loading..." : "Sign In"}
@@ -189,7 +199,7 @@ const Auth = () => {
                   />
                   <Button
                     type="submit"
-                    className="w-full"
+                    className="w-full bg-bourbon-600 hover:bg-bourbon-700"
                     disabled={isLoading}
                   >
                     {isLoading ? "Loading..." : "Sign Up"}
