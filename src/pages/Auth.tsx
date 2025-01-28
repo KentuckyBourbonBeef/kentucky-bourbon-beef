@@ -11,8 +11,8 @@ const Auth = () => {
     <div 
       className="min-h-screen flex items-center justify-center px-4 bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: 'url("https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80")',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundImage: 'url("https://images.unsplash.com/photo-1472141521881-95d0e87e2e39?auto=format&fit=crop&q=80")',
+        backgroundColor: 'rgba(0, 0, 0, 0.45)',
         backgroundBlendMode: 'overlay',
       }}
     >
