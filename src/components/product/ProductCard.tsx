@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Database } from "@/integrations/supabase/types";
+import { ShoppingCart } from "lucide-react";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 
@@ -13,14 +14,14 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow animate-fade-in">
       <Link to={`/product/${product.id}`}>
         <CardHeader className="p-0">
-          <div className="aspect-[4/3] relative">
+          <div className="aspect-[4/3] relative group">
             <img
               src={product.image_url || "https://images.unsplash.com/photo-1615937722923-67f6deaf2cc9"}
               alt={product.name}
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
             />
             {product.is_bdc_certified && (
               <Badge className="absolute top-4 right-4 bg-bourbon-600 group cursor-help">
@@ -42,7 +43,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             {product.name}
           </CardTitle>
         </Link>
-        <CardDescription className="mb-4">{product.description}</CardDescription>
+        <CardDescription className="mb-4 line-clamp-2">{product.description}</CardDescription>
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <p className="text-xl font-semibold text-bourbon-800">
@@ -60,9 +61,10 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
       </CardContent>
       <CardFooter>
         <Button 
-          className="w-full bg-bourbon-600 hover:bg-bourbon-700"
+          className="w-full bg-bourbon-600 hover:bg-bourbon-700 transition-colors"
           onClick={() => onAddToCart(product)}
         >
+          <ShoppingCart className="mr-2 h-4 w-4" />
           Add to Cart
         </Button>
       </CardFooter>

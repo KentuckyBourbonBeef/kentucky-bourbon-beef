@@ -8,6 +8,7 @@ import ProductListSkeleton from "./product/ProductListSkeleton";
 import EmptyProductList from "./product/EmptyProductList";
 import { filterProducts, sortProducts } from "@/utils/productSearch";
 import { ProductCategory, SortOption } from "@/types/product";
+import { Separator } from "./ui/separator";
 
 const ProductList = () => {
   const { data: products, isLoading } = useProducts();
@@ -34,9 +35,17 @@ const ProductList = () => {
   return (
     <section id="products" className="container py-8 scroll-mt-20 animate-fade-in">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-4xl font-bold">Our Premium Cuts</h2>
+        <div>
+          <h2 className="text-4xl font-bold mb-2">Our Premium Cuts</h2>
+          <p className="text-muted-foreground max-w-2xl">
+            Experience the unique flavor of our bourbon-finished beef, carefully aged and crafted 
+            to bring you the finest cuts from Kentucky's rich culinary heritage.
+          </p>
+        </div>
         <Cart />
       </div>
+      
+      <Separator className="my-8" />
       
       <SearchFilters
         searchQuery={searchQuery}
