@@ -19,7 +19,7 @@ const Process = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4">Bourbon-Finishing Excellence</h3>
             <p className="text-bourbon-100 leading-relaxed">
-              Using nutrient-rich Bourbon Grains from Kentucky's finest distilleries, we finish our cattle through a proprietary process that enhances tenderness and creates an exceptional flavor profile. This sustainable practice supports local farmers while reducing industry waste.
+              Using nutrient-rich Bourbon Grains from Kentucky's finest distilleries, we finish our cattle through a time-tested process that enhances tenderness and creates an exceptional flavor profile. This sustainable practice supports local farmers while reducing industry waste.
             </p>
           </div>
           <div className="text-center group">

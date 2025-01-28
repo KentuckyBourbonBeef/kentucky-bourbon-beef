@@ -15,13 +15,13 @@ const FAQ = () => {
           <AccordionItem value="item-2">
             <AccordionTrigger>How do you ensure the quality of your beef?</AccordionTrigger>
             <AccordionContent>
-              We partner with select Kentucky farmers who raise premium Black Angus cattle. Our master butchers hand-select only the finest cuts, which are then finished using our proprietary Bourbon Grains process. Each piece is carefully inspected to ensure it meets our high standards for marbling, texture, and flavor.
+              We partner with select Kentucky farmers who raise premium Black Angus cattle. Our master butchers hand-select only the finest cuts, which are then finished using our Bourbon Grains process. Each piece is carefully inspected to ensure it meets our high standards for marbling, texture, and flavor.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
             <AccordionTrigger>What is the Butcher Distiller's Cut™ certification?</AccordionTrigger>
             <AccordionContent>
-              Our Butcher Distiller's Cut™ (BDC) certification indicates that the beef has been finished using our proprietary nutrient-rich Bourbon Grains process, developed in partnership with Kentucky's finest distilleries. This certification ensures you're getting authentic Kentucky Bourbon Beef with its signature flavor profile and exceptional tenderness.
+              Our Butcher Distiller's Cut™ (BDC) certification indicates that the beef has been finished using our nutrient-rich Bourbon Grains process, developed in partnership with Kentucky's finest distilleries. This certification ensures you're getting authentic Kentucky Bourbon Beef with its signature flavor profile and exceptional tenderness.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
