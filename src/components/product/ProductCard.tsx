@@ -21,8 +21,14 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             className="object-cover w-full h-full"
           />
           {product.is_bdc_certified && (
-            <Badge className="absolute top-4 right-4 bg-bourbon-600">
-              BDC Certified
+            <Badge className="absolute top-4 right-4 bg-bourbon-600 group cursor-help">
+              <span className="relative">
+                BDC - Butcher Distiller's Cut™
+                <span className="invisible group-hover:visible absolute left-0 top-full mt-2 w-64 p-2 bg-white text-bourbon-800 text-xs rounded shadow-lg z-50">
+                  Our Butcher Distiller's Cut™ beef is uniquely finished on Bourbon Distiller's Grains, 
+                  creating a distinctly rich Kentucky flavor profile.
+                </span>
+              </span>
             </Badge>
           )}
         </div>
