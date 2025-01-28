@@ -279,7 +279,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      product_category: "ribeye" | "strip" | "tenderloin" | "tomahawk" | "other"
+      product_category:
+        | "ribeye"
+        | "strip"
+        | "tenderloin"
+        | "tomahawk"
+        | "other"
+        | "tbone"
+        | "porterhouse"
     }
     CompositeTypes: {
       [_ in never]: never
