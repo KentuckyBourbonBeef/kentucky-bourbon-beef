@@ -37,32 +37,6 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
 
       console.log("User authenticated:", user.id);
 
-      // First, ensure customer record exists
-      const { data: customerData, error: customerError } = await supabase
-        .from("customers")
-        .select("id")
-        .eq("id", user.id)
-        .single();
-
-      if (customerError) {
-        console.error("Customer lookup error:", customerError);
-        throw new Error("Unable to verify customer record. Please try again.");
-      }
-
-      if (!customerData) {
-        console.error("No customer record found for user:", user.id);
-        // Try to create customer record
-        const { error: insertError } = await supabase
-          .from("customers")
-          .insert({ id: user.id });
-          
-        if (insertError) {
-          console.error("Failed to create customer record:", insertError);
-          throw new Error("Unable to create customer profile. Please try again.");
-        }
-      }
-
-      console.log("Attempting to save item...");
       const { error: saveError } = await supabase
         .from("saved_items")
         .insert({
@@ -72,7 +46,7 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
 
       if (saveError) {
         console.error("Save error:", saveError);
-        if (saveError.code === '23505') { // Unique violation
+        if (saveError.code === '23505') { // Unique violation code
           toast({
             title: "Already saved",
             description: "This item is already in your saved items",
