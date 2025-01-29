@@ -55,12 +55,9 @@ const Hero = () => {
 
           {/* Branded Subtitle */}
           <div className="inline-block">
-            <div className="font-serif italic text-2xl md:text-3xl text-bourbon-100/90 font-bold relative px-12 py-3
-              before:content-[''] before:absolute before:inset-0 before:bg-black/40 before:backdrop-blur-sm
-              after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-r after:from-bourbon-900/20 after:to-bourbon-600/20
-              rounded-lg border border-bourbon-400/30 shadow-2xl transform-gpu hover:scale-105 transition-all duration-500">
+            <h2 className="font-serif italic text-2xl md:text-3xl text-bourbon-100 font-bold">
               BDC Butcher Distiller's Cut™
-            </div>
+            </h2>
           </div>
 
           {/* Description */}
