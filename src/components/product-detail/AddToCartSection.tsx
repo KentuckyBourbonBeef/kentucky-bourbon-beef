@@ -1,6 +1,6 @@
 import { Product } from "@/types/product";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Check } from "lucide-react";
+import { ShoppingCart, Check, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
@@ -52,7 +52,7 @@ const AddToCartSection = ({ product }: AddToCartSectionProps) => {
           "absolute inset-0 flex items-center justify-center transition-all duration-300",
           isAdding ? "opacity-100" : "opacity-0"
         )}>
-          <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          <Loader2 className="h-6 w-6 animate-spin" />
         </div>
         
         <div className={cn(
