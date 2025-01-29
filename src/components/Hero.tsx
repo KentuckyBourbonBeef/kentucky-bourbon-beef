@@ -14,19 +14,30 @@ const Hero = () => {
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2">
           Kentucky Bourbon Beef
         </h1>
-        <div className="inline-block relative">
-          <div className="font-serif italic text-bourbon-400 text-lg md:text-2xl mb-8 font-bold relative px-12 py-3
-            before:content-[''] before:absolute before:inset-0 before:border-2 before:border-bourbon-400/30
-            after:content-[''] after:absolute after:inset-[3px] after:border after:border-bourbon-400/60
-            [text-shadow:_2px_2px_2px_rgb(0_0_0_/_20%)]
-            bg-[linear-gradient(to_right,rgba(139,69,19,0.1),rgba(139,69,19,0.2)_49%,rgba(139,69,19,0.1))]
-            before:transform before:skew-x-12
-            after:transform after:skew-x-12
-            before:rounded-lg after:rounded-lg
-            before:bg-[linear-gradient(45deg,rgba(165,42,42,0.1),transparent_40%,transparent_60%,rgba(165,42,42,0.1))]
-            after:bg-[linear-gradient(-45deg,rgba(165,42,42,0.1),transparent_40%,transparent_60%,rgba(165,42,42,0.1))]">
-            BDC Butcher Distillers Cut<span className="font-sans text-[0.7em] tracking-wider align-super ml-0.5 font-normal 
-              bg-bourbon-400/10 px-1 rounded transform -rotate-12 inline-block">™</span>
+        <div className="inline-block relative perspective-[1000px]">
+          <div className="font-serif italic text-bourbon-100 text-lg md:text-2xl mb-8 font-bold relative px-16 py-4
+            before:content-[''] before:absolute before:inset-0
+            after:content-[''] after:absolute after:inset-0
+            transform-style-preserve-3d hover:transform hover:rotate-y-2 transition-transform duration-300
+            [background-image:repeating-linear-gradient(90deg,#4a332b,#6b4c41_4px,#855e4f_8px,#6b4c41_12px,#4a332b_16px)]
+            [box-shadow:0_10px_20px_rgba(0,0,0,0.3),inset_0_2px_4px_rgba(255,255,255,0.2)]
+            rounded-md
+            before:[background-image:linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%,rgba(255,255,255,0.1)),linear-gradient(-45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%,rgba(255,255,255,0.1))]
+            before:bg-[length:20px_20px]
+            after:[background-image:radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.2),transparent_60%)]">
+            BDC Butcher Distillers Cut
+            <span className="absolute -right-2 -top-1 font-sans text-[0.65em] tracking-wider font-normal 
+              px-2 py-1 transform rotate-12
+              [text-shadow:1px_1px_2px_rgba(0,0,0,0.6)]
+              before:content-[''] before:absolute before:inset-0
+              before:[background-image:linear-gradient(45deg,rgba(139,69,19,0.4),rgba(139,69,19,0.1))]
+              before:opacity-80 before:-z-10
+              after:content-[''] after:absolute after:inset-0
+              after:[background-image:repeating-linear-gradient(45deg,transparent,transparent_2px,rgba(0,0,0,0.1)_2px,rgba(0,0,0,0.1)_4px)]
+              after:opacity-30 after:-z-20
+              [filter:brightness(1.2)_contrast(1.1)]">
+              ™
+            </span>
           </div>
         </div>
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
