@@ -7,6 +7,7 @@ import ProductGallery from "@/components/product-detail/ProductGallery";
 import ProductInfo from "@/components/product-detail/ProductInfo";
 import AddToCartSection from "@/components/product-detail/AddToCartSection";
 import RelatedProducts from "@/components/product-detail/RelatedProducts";
+import ReviewsSection from "@/components/product-detail/ReviewsSection";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -68,7 +69,10 @@ const ProductDetail = () => {
     return (
       <div className="container mx-auto p-8 text-center">
         <h1 className="text-2xl font-bold text-gray-800">Product not found</h1>
-        <Link to="/" className="text-bourbon-600 hover:text-bourbon-700 mt-4 inline-block">
+        <Link
+          to="/"
+          className="text-bourbon-600 hover:text-bourbon-700 mt-4 inline-block"
+        >
           Return to products
         </Link>
       </div>
@@ -79,8 +83,8 @@ const ProductDetail = () => {
     <main className="min-h-screen py-12 animate-fade-in">
       <div className="container mx-auto px-4">
         <div className="mb-8 space-y-4">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-flex items-center text-bourbon-600 hover:text-bourbon-700 group transition-colors"
           >
             <ChevronLeft className="h-4 w-4 mr-1 transition-transform group-hover:-translate-x-1" />
@@ -90,24 +94,27 @@ const ProductDetail = () => {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/" className="text-bourbon-600 hover:text-bourbon-700">
+                <BreadcrumbLink
+                  href="/"
+                  className="text-bourbon-600 hover:text-bourbon-700"
+                >
                   Home
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              
+
               <BreadcrumbSeparator />
-              
+
               <BreadcrumbItem>
-                <BreadcrumbLink 
-                  href="/" 
+                <BreadcrumbLink
+                  href="/"
                   className="text-bourbon-600 hover:text-bourbon-700 capitalize"
                 >
                   {product.category}s
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              
+
               <BreadcrumbSeparator />
-              
+
               <BreadcrumbItem>
                 <BreadcrumbPage className="text-bourbon-800">
                   {product.name}
@@ -124,6 +131,8 @@ const ProductDetail = () => {
             <AddToCartSection product={product} />
           </div>
         </div>
+
+        <ReviewsSection product={product} />
 
         {relatedProducts && <RelatedProducts products={relatedProducts} />}
       </div>
