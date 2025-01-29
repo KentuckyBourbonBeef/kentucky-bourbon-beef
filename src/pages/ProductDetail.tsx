@@ -69,7 +69,6 @@ const ProductDetail = () => {
         </div>
 
         <ReviewsSection product={product} />
-
         {relatedProducts && <RelatedProducts products={relatedProducts} />}
       </div>
     </main>
