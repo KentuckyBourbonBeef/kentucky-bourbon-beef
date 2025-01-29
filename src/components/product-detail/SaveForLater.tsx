@@ -37,29 +37,21 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
 
       console.log("User authenticated:", user.id);
 
-      // First, ensure customer record exists
-      const { data: customerData, error: customerError } = await supabase
-        .from("customers")
+      // First check if the item is already saved
+      const { data: existingItem } = await supabase
+        .from("saved_items")
         .select("id")
-        .eq("id", user.id)
+        .eq("customer_id", user.id)
+        .eq("product_id", product.id)
         .single();
 
-      if (customerError) {
-        console.error("Customer lookup error:", customerError);
-        throw new Error("Unable to verify customer record. Please try again.");
-      }
-
-      if (!customerData) {
-        console.log("No customer record found, creating one...");
-        const { error: insertError } = await supabase
-          .from("customers")
-          .insert([{ id: user.id }]);
-          
-        if (insertError) {
-          console.error("Failed to create customer record:", insertError);
-          throw new Error("Unable to create customer profile. Please try again.");
-        }
-        console.log("Customer record created successfully");
+      if (existingItem) {
+        console.log("Item already saved");
+        toast({
+          title: "Already saved",
+          description: "This item is already in your saved items",
+        });
+        return;
       }
 
       console.log("Attempting to save item for customer:", user.id, "product:", product.id);
@@ -72,22 +64,15 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
 
       if (saveError) {
         console.error("Save error:", saveError);
-        if (saveError.code === '23505') { // Unique violation code
-          toast({
-            title: "Already saved",
-            description: "This item is already in your saved items",
-          });
-        } else {
-          console.error("Unexpected save error:", saveError);
-          throw new Error(saveError.message);
-        }
-      } else {
-        console.log("Item saved successfully");
-        toast({
-          title: "Saved for later",
-          description: "Item has been added to your saved items",
-        });
+        throw new Error("Could not save the item. Please try again.");
       }
+
+      console.log("Item saved successfully");
+      toast({
+        title: "Saved for later",
+        description: "Item has been added to your saved items",
+      });
+      
     } catch (error: any) {
       console.error("Error in save process:", error);
       toast({
