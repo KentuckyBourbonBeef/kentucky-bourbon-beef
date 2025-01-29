@@ -11,9 +11,12 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
       </div>
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto animate-fadeIn">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2">
           Kentucky Bourbon Beef
         </h1>
+        <div className="font-serif italic text-bourbon-400 text-lg md:text-2xl mb-8">
+          BDC™ Butcher Distillers Cut
+        </div>
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
           Experience the pinnacle of flavor where Kentucky's bourbon heritage meets premium dry-aged beef.
         </p>
