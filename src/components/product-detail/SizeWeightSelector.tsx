@@ -53,13 +53,13 @@ const SizeWeightSelector = ({ product, onWeightSelect, selectedQuantity = 1 }: S
   };
 
   const getPriceForQuantity = (basePrice: number, quantity: number): number => {
-    if (!product.pricing_tiers || !Array.isArray(product.pricing_tiers)) return basePrice;
+    if (!product.pricing_tiers) return basePrice;
 
-    const tiers = product.pricing_tiers as PricingTier[];
-    const applicableTier = [...tiers]
-      .sort((a, b) => b.quantity - a.quantity)
-      .find(tier => quantity >= tier.quantity);
+    // Safely type cast the pricing tiers
+    const pricingTiers = (product.pricing_tiers as unknown as PricingTier[])
+      .sort((a, b) => b.quantity - a.quantity);
 
+    const applicableTier = pricingTiers.find(tier => quantity >= tier.quantity);
     return applicableTier ? applicableTier.price_per_unit : basePrice;
   };
 
