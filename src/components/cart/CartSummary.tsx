@@ -12,6 +12,15 @@ interface CartSummaryProps {
   onCheckout: () => void;
 }
 
+interface SubscriptionPlan {
+  id: string;
+  name: string;
+  stripe_price_id: string;
+  price: number;
+  interval: string;
+  features: string[];
+}
+
 export function CartSummary({ total, onCheckout }: CartSummaryProps) {
   const { createCheckoutSession, loading } = useStripeCheckout();
   const [selectedPlanId, setSelectedPlanId] = useState<string>("");
@@ -25,7 +34,12 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
         .order("price");
       
       if (error) throw error;
-      return data;
+      
+      // Ensure features is always an array
+      return data.map(plan => ({
+        ...plan,
+        features: Array.isArray(plan.features) ? plan.features : []
+      })) as SubscriptionPlan[];
     },
   });
 
@@ -81,7 +95,7 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
             <ul className="list-disc list-inside mt-1">
               {subscriptionPlans
                 .find(p => p.stripe_price_id === selectedPlanId)
-                ?.features.map((feature: string, index: number) => (
+                ?.features.map((feature, index) => (
                   <li key={index}>{feature}</li>
                 ))}
             </ul>
