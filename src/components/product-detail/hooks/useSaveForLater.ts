@@ -8,14 +8,14 @@ export const useSaveForLater = (product: Product) => {
   const { toast } = useToast();
 
   const checkIfItemIsSaved = async (userId: string) => {
-    const { data: existingItem } = await supabase
+    const { data } = await supabase
       .from("saved_items")
       .select("id")
       .eq("customer_id", userId)
       .eq("product_id", product.id)
       .single();
     
-    return existingItem;
+    return !!data;
   };
 
   const saveItem = async () => {
@@ -42,9 +42,9 @@ export const useSaveForLater = (product: Product) => {
 
       console.log("User authenticated:", user.id);
 
-      const existingItem = await checkIfItemIsSaved(user.id);
-
-      if (existingItem) {
+      // Check if item is already saved
+      const isAlreadySaved = await checkIfItemIsSaved(user.id);
+      if (isAlreadySaved) {
         console.log("Item already saved");
         toast({
           title: "Already saved",
