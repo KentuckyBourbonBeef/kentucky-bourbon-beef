@@ -14,6 +14,7 @@ interface ProductGalleryProps {
 
 const ProductGallery = ({ product }: ProductGalleryProps) => {
   const [isZoomed, setIsZoomed] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(0);
 
   // Get default image based on product category
   const getCategoryDefaultImage = (category: string) => {
@@ -28,32 +29,63 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
     return categoryImages[category] || categoryImages.ribeye;
   };
 
-  const imageUrl = product.image_url || getCategoryDefaultImage(product.category);
+  // Create an array of images (in a real app, this would come from the product)
+  const images = [
+    product.image_url || getCategoryDefaultImage(product.category),
+    getCategoryDefaultImage(product.category), // Adding a second image for demonstration
+  ];
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isZoomed) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    const image = e.currentTarget.querySelector('img');
+    if (image) {
+      image.style.transformOrigin = `${x}% ${y}%`;
+    }
+  };
 
   return (
     <div className="space-y-4">
       <Dialog>
         <DialogTrigger asChild>
-          <div className="relative aspect-square rounded-lg overflow-hidden bg-white shadow-lg cursor-pointer group">
+          <div 
+            className="relative aspect-square rounded-lg overflow-hidden bg-white shadow-lg cursor-pointer group"
+            onMouseMove={handleMouseMove}
+            onClick={() => setIsZoomed(!isZoomed)}
+          >
             <img
-              src={imageUrl}
+              src={images[selectedImage]}
               alt={`${product.name} - ${product.category} cut`}
               className={cn(
                 "w-full h-full object-cover transition-transform duration-300",
-                isZoomed ? "scale-125" : "scale-100",
+                isZoomed ? "scale-150" : "scale-100",
                 "group-hover:scale-110"
               )}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-            <div className="absolute bottom-4 right-4 bg-white/90 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <ZoomIn className="w-5 h-5 text-bourbon-600" />
-            </div>
+            <button 
+              className="absolute bottom-4 right-4 bg-white/90 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsZoomed(!isZoomed);
+              }}
+            >
+              {isZoomed ? (
+                <ZoomOut className="w-5 h-5 text-bourbon-600" />
+              ) : (
+                <ZoomIn className="w-5 h-5 text-bourbon-600" />
+              )}
+            </button>
           </div>
         </DialogTrigger>
         <DialogContent className="max-w-4xl">
           <div className="relative aspect-square">
             <img
-              src={imageUrl}
+              src={images[selectedImage]}
               alt={`${product.name} - ${product.category} cut`}
               className="w-full h-full object-contain"
             />
@@ -61,8 +93,30 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
         </DialogContent>
       </Dialog>
 
+      {/* Thumbnails */}
+      <div className="grid grid-cols-4 gap-2">
+        {images.map((image, index) => (
+          <button
+            key={index}
+            onClick={() => setSelectedImage(index)}
+            className={cn(
+              "relative aspect-square rounded-md overflow-hidden border-2 transition-all duration-200",
+              selectedImage === index 
+                ? "border-bourbon-600 shadow-md" 
+                : "border-transparent hover:border-bourbon-400"
+            )}
+          >
+            <img
+              src={image}
+              alt={`${product.name} thumbnail ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+          </button>
+        ))}
+      </div>
+
       <div className="text-sm text-gray-500 text-center">
-        Click image to view in full size
+        Click image to view in full size • Hover to zoom
       </div>
     </div>
   );
