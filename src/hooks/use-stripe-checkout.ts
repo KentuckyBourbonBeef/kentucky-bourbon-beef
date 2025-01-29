@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { CartItem } from "@/contexts/CartContext";
 
 export function useStripeCheckout() {
   const [loading, setLoading] = useState(false);
 
-  const createCheckoutSession = async (priceId: string) => {
-    console.log("Creating checkout session for price:", priceId);
+  const createCheckoutSession = async (priceId: string | null, items?: CartItem[]) => {
+    console.log("Creating checkout session...");
     setLoading(true);
 
     try {
       const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { priceId }
+        body: { priceId, items }
       });
 
       console.log("Checkout session response:", { data, error });

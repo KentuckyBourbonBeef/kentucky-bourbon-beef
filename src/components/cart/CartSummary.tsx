@@ -6,6 +6,7 @@ import { PlanSelector } from "./subscription/PlanSelector";
 import { useSubscriptionPlans } from "@/hooks/use-subscription-plans";
 import { useCheckout } from "@/hooks/use-checkout";
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
 
 interface CartSummaryProps {
   total: number;
@@ -16,9 +17,10 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
   const [selectedPlanId, setSelectedPlanId] = useState<string>("");
   const { data: subscriptionPlans, isLoading: plansLoading } = useSubscriptionPlans();
   const { handleCheckout, isProcessing } = useCheckout();
+  const { items } = useCart();
 
   const initiateCheckout = async () => {
-    const checkoutUrl = await handleCheckout(selectedPlanId);
+    const checkoutUrl = await handleCheckout(selectedPlanId, items);
     
     if (checkoutUrl) {
       window.location.href = checkoutUrl;
@@ -54,10 +56,10 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
         <Button 
           className="w-full bg-bourbon-600 hover:bg-bourbon-700 transition-colors group"
           onClick={initiateCheckout}
-          disabled={isProcessing || !selectedPlanId}
+          disabled={isProcessing}
         >
           <ShoppingCart className="mr-2 h-4 w-4 transition-transform group-hover:scale-110" />
-          {isProcessing ? "Processing..." : "Subscribe Now"}
+          {isProcessing ? "Processing..." : selectedPlanId ? "Subscribe Now" : "Checkout"}
         </Button>
       </div>
     </div>

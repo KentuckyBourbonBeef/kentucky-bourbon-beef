@@ -10,7 +10,6 @@ const corsHeaders = {
 serve(async (req) => {
   console.log("Received request to create-checkout");
 
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     console.log("Handling CORS preflight request");
     return new Response(null, { headers: corsHeaders });
@@ -18,13 +17,8 @@ serve(async (req) => {
 
   try {
     console.log("Parsing request body...");
-    const { priceId } = await req.json();
-    console.log("Price ID received:", priceId);
-
-    if (!priceId) {
-      console.error("No price ID provided");
-      throw new Error('Price ID is required');
-    }
+    const { priceId, items } = await req.json();
+    console.log("Request data:", { priceId, items });
 
     console.log("Initializing Supabase client...");
     const supabaseClient = createClient(
@@ -61,20 +55,48 @@ serve(async (req) => {
       console.log("Found existing customer:", customerId);
     }
 
-    console.log("Creating checkout session...");
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      customer_email: customerId ? undefined : user.email,
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      success_url: `${req.headers.get('origin')}/success`,
-      cancel_url: `${req.headers.get('origin')}/cancel`,
-    });
+    let sessionConfig;
+    if (priceId) {
+      // Subscription checkout
+      sessionConfig = {
+        customer: customerId,
+        customer_email: customerId ? undefined : user.email,
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+        mode: 'subscription',
+      };
+    } else if (items) {
+      // One-time purchase checkout
+      sessionConfig = {
+        customer: customerId,
+        customer_email: customerId ? undefined : user.email,
+        line_items: items.map(item => ({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: item.name,
+              images: item.image_url ? [item.image_url] : undefined,
+            },
+            unit_amount: Math.round(Number(item.price) * 100), // Convert to cents
+          },
+          quantity: item.quantity,
+        })),
+        mode: 'payment',
+      };
+    } else {
+      throw new Error('Invalid checkout configuration');
+    }
+
+    // Add success and cancel URLs
+    sessionConfig.success_url = `${req.headers.get('origin')}/success`;
+    sessionConfig.cancel_url = `${req.headers.get('origin')}/cancel`;
+
+    console.log('Creating checkout session with config:', sessionConfig);
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     console.log("Checkout session created:", session.id);
     return new Response(
