@@ -23,12 +23,12 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
         return;
       }
       
-      console.log("Starting checkout with plan:", selectedPlanId);
+      console.log("Starting checkout process with plan:", selectedPlanId);
       const { error, url } = await createCheckoutSession(selectedPlanId);
       
       if (error) {
         console.error("Checkout error:", error);
-        toast.error("Failed to start checkout process");
+        toast.error("Failed to start checkout process. Please try again.");
         return;
       }
       
@@ -37,11 +37,11 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
         window.location.href = url;
       } else {
         console.error("No checkout URL returned");
-        toast.error("No checkout URL returned");
+        toast.error("Failed to create checkout session. Please try again.");
       }
     } catch (error) {
       console.error("Checkout error:", error);
-      toast.error("Failed to start checkout process");
+      toast.error("An unexpected error occurred. Please try again.");
     }
   };
 

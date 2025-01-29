@@ -14,8 +14,11 @@ serve(async (req) => {
   }
 
   try {
+    console.log("Received checkout request");
+    
     // Get the request body
     const { priceId } = await req.json();
+    console.log("Price ID received:", priceId);
 
     if (!priceId) {
       throw new Error('Price ID is required');
@@ -32,8 +35,11 @@ serve(async (req) => {
     const { data: { user } } = await supabaseClient.auth.getUser(token);
 
     if (!user?.email) {
+      console.error("User email not found");
       throw new Error('User email not found');
     }
+
+    console.log("Creating checkout session for user:", user.email);
 
     // Initialize Stripe
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
@@ -49,6 +55,7 @@ serve(async (req) => {
     let customerId = undefined;
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
+      console.log("Found existing customer:", customerId);
     }
 
     console.log('Creating checkout session...');

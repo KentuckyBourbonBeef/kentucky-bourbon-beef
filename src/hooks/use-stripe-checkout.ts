@@ -15,14 +15,14 @@ export function useStripeCheckout() {
 
       if (error) {
         console.error("Supabase function error:", error);
-        throw error;
+        return { url: null, error };
       }
 
       console.log("Checkout session response:", data);
 
       if (!data?.url) {
         console.error("No URL in response:", data);
-        throw new Error("No checkout URL returned");
+        return { url: null, error: new Error("No checkout URL returned") };
       }
 
       return { url: data.url, error: null };
