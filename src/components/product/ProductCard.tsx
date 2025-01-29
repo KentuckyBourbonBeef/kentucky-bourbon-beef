@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Database } from "@/integrations/supabase/types";
 import { ShoppingCart } from "lucide-react";
 import ProductBadges from "./ProductBadges";
+import { toast } from "@/hooks/use-toast";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 
@@ -26,6 +27,22 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
     };
     
     return imageMap[category] || imageMap.other;
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    onAddToCart(product);
+    
+    // Show toast near the cursor position
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart.`,
+      className: "absolute cursor-toast",
+      style: {
+        top: `${e.clientY}px`,
+        left: `${e.clientX}px`,
+        transform: 'translate(-50%, -100%)'
+      },
+    });
   };
 
   return (
@@ -67,7 +84,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
       <CardFooter>
         <Button 
           className="w-full bg-bourbon-600 hover:bg-bourbon-700 transition-colors"
-          onClick={() => onAddToCart(product)}
+          onClick={handleAddToCart}
         >
           <ShoppingCart className="mr-2 h-4 w-4" />
           Add to Cart
