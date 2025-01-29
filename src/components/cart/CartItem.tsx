@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2, Loader2 } from "lucide-react";
 import { CartItem as CartItemType } from "@/contexts/CartContext";
+import { useState } from "react";
 
 interface CartItemProps {
   item: CartItemType;
@@ -9,14 +10,24 @@ interface CartItemProps {
 }
 
 export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps) {
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleQuantityUpdate = async (newQuantity: number) => {
+    if (newQuantity < 1) return;
+    setIsUpdating(true);
+    
+    // Simulate a small delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    onUpdateQuantity(item.id, newQuantity);
+    setIsUpdating(false);
+  };
+
   return (
     <div className="flex items-center space-x-4 border-b pb-4 animate-fade-in">
       <div className="aspect-square h-16 w-16 overflow-hidden rounded-md">
         <img
-          src={
-            item.image_url ||
-            "https://images.unsplash.com/photo-1615937722923-67f6deaf2cc9"
-          }
+          src={item.image_url || "/placeholder.svg"}
           alt={item.name}
           className="h-full w-full object-cover transition-transform hover:scale-105"
         />
@@ -31,16 +42,24 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
         <Button
           variant="outline"
           size="icon"
-          onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+          onClick={() => handleQuantityUpdate(item.quantity - 1)}
+          disabled={isUpdating || item.quantity <= 1}
           className="transition-colors"
         >
           <Minus className="h-4 w-4" />
         </Button>
-        <span className="w-8 text-center">{item.quantity}</span>
+        <span className="w-8 text-center">
+          {isUpdating ? (
+            <Loader2 className="h-4 w-4 mx-auto animate-spin" />
+          ) : (
+            item.quantity
+          )}
+        </span>
         <Button
           variant="outline"
           size="icon"
-          onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+          onClick={() => handleQuantityUpdate(item.quantity + 1)}
+          disabled={isUpdating}
           className="transition-colors"
         >
           <Plus className="h-4 w-4" />
@@ -49,6 +68,7 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
           variant="ghost"
           size="icon"
           onClick={() => onRemoveItem(item.id)}
+          disabled={isUpdating}
           className="text-red-500 hover:text-red-600 transition-colors"
         >
           <Trash2 className="h-4 w-4" />
