@@ -2,17 +2,12 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
-import { Product } from "@/types/product";
+import { Product, PricingTier } from "@/types/product";
 
 interface WeightOption {
   value: string;
   label: string;
   price: number;
-}
-
-interface PricingTier {
-  quantity: number;
-  price_per_unit: number;
 }
 
 interface SizeWeightSelectorProps {
