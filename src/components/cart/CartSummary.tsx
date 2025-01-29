@@ -17,11 +17,26 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
   const { data: subscriptionPlans, isLoading: plansLoading } = useSubscriptionPlans();
 
   const handleCheckout = async () => {
-    if (!selectedPlanId) {
-      toast.error("Please select a subscription plan");
-      return;
+    try {
+      if (!selectedPlanId) {
+        toast.error("Please select a subscription plan");
+        return;
+      }
+      
+      const { error, url } = await createCheckoutSession(selectedPlanId);
+      
+      if (error) {
+        toast.error("Failed to start checkout process");
+        return;
+      }
+      
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast.error("Failed to start checkout process");
     }
-    await createCheckoutSession(selectedPlanId);
   };
 
   return (

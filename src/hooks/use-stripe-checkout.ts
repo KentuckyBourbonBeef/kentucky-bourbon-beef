@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
-export const useStripeCheckout = () => {
+export function useStripeCheckout() {
   const [loading, setLoading] = useState(false);
 
   const createCheckoutSession = async (priceId: string) => {
@@ -13,13 +12,11 @@ export const useStripeCheckout = () => {
       });
 
       if (error) throw error;
-      if (!data.url) throw new Error('No checkout URL returned');
 
-      // Redirect to Stripe Checkout
-      window.location.href = data.url;
+      return { url: data?.url, error: null };
     } catch (error) {
       console.error('Error creating checkout session:', error);
-      toast.error('Failed to start checkout process. Please try again.');
+      return { url: null, error };
     } finally {
       setLoading(false);
     }
@@ -29,4 +26,4 @@ export const useStripeCheckout = () => {
     createCheckoutSession,
     loading,
   };
-};
+}
