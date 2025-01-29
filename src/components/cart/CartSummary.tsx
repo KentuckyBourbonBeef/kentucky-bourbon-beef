@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { PlanSelector } from "./subscription/PlanSelector";
 import { useSubscriptionPlans } from "@/hooks/use-subscription-plans";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CartSummaryProps {
   total: number;
@@ -18,16 +19,22 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
 
   const handleCheckout = async () => {
     try {
-      console.log("Starting checkout process...");
-      console.log("Selected plan ID:", selectedPlanId);
+      const { data: { user } } = await supabase.auth.getUser();
       
+      if (!user) {
+        toast.error("Please sign in to subscribe");
+        return;
+      }
+
       if (!selectedPlanId) {
         toast.error("Please select a subscription plan");
         return;
       }
 
+      console.log("Starting checkout process...");
+      console.log("Selected plan ID:", selectedPlanId);
+      
       const { error, url } = await createCheckoutSession(selectedPlanId);
-      console.log("Checkout session result:", { error, url });
       
       if (error) {
         console.error("Checkout error:", error);
