@@ -16,6 +16,9 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | "all">("all");
   const [sortBy, setSortBy] = useState<SortOption>("name");
   const [gridView, setGridView] = useState<"2x2" | "3x3">("3x3");
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+  const [agingDuration, setAgingDuration] = useState<number | null>(null);
+  const [showBdcOnly, setShowBdcOnly] = useState(false);
 
   if (isLoading) {
     return (
@@ -26,7 +29,14 @@ const ProductList = () => {
     );
   }
 
-  const filteredProducts = filterProducts(products || [], searchQuery, selectedCategory);
+  const filteredProducts = filterProducts(
+    products || [], 
+    searchQuery, 
+    selectedCategory,
+    priceRange,
+    agingDuration,
+    showBdcOnly
+  );
   const sortedProducts = sortProducts(filteredProducts, sortBy);
 
   return (
@@ -40,6 +50,12 @@ const ProductList = () => {
         setSelectedCategory={setSelectedCategory}
         sortBy={sortBy}
         setSortBy={setSortBy}
+        priceRange={priceRange}
+        setPriceRange={setPriceRange}
+        agingDuration={agingDuration}
+        setAgingDuration={setAgingDuration}
+        showBdcOnly={showBdcOnly}
+        setShowBdcOnly={setShowBdcOnly}
       />
       <ProductGrid
         products={sortedProducts}

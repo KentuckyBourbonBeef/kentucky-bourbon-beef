@@ -1,53 +1,32 @@
-export const partialMatch = (searchTerm: string, target: string) => {
-  if (!searchTerm || !target) return false;
-  
-  const normalizedSearch = searchTerm.toLowerCase().trim();
-  const normalizedTarget = target.toLowerCase().trim();
-  
-  console.log('Matching:', { searchTerm: normalizedSearch, target: normalizedTarget });
-  
-  return normalizedTarget.includes(normalizedSearch) || 
-         normalizedSearch.includes(normalizedTarget);
-};
+import { Product, ProductCategory, SortOption } from "@/types/product";
 
 export const filterProducts = (
-  products: any[],
+  products: Product[],
   searchQuery: string,
-  selectedCategory: string
+  category: ProductCategory | "all",
+  priceRange: [number, number],
+  minAgingDuration: number | null,
+  bdcOnly: boolean
 ) => {
-  if (!products) return [];
-  
-  console.log('Filtering products:', { 
-    totalProducts: products.length,
-    searchQuery,
-    selectedCategory 
-  });
-
   return products.filter((product) => {
-    const matchesName = product.name && partialMatch(searchQuery, product.name);
-    const matchesDescription = product.description && partialMatch(searchQuery, product.description);
-    const matchesCategory = product.category && partialMatch(searchQuery, product.category);
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesCategory = category === "all" || product.category === category;
+    
+    const matchesPrice = Number(product.price) >= priceRange[0] && 
+      Number(product.price) <= priceRange[1];
+    
+    const matchesAging = !minAgingDuration || 
+      (product.aging_duration || 0) >= minAgingDuration;
+    
+    const matchesBdc = !bdcOnly || product.is_bdc_certified;
 
-    console.log('Product matches:', {
-      productName: product.name,
-      matchesName,
-      matchesDescription,
-      matchesCategory
-    });
-
-    const matches = matchesName || matchesDescription || matchesCategory;
-    const categoryFilter = selectedCategory === "all" || product.category === selectedCategory;
-
-    return matches && categoryFilter;
+    return matchesSearch && matchesCategory && matchesPrice && matchesAging && matchesBdc;
   });
 };
 
-export const sortProducts = (
-  products: any[],
-  sortBy: "price-asc" | "price-desc" | "name"
-) => {
-  if (!products) return [];
-  
+export const sortProducts = (products: Product[], sortBy: SortOption) => {
   return [...products].sort((a, b) => {
     switch (sortBy) {
       case "price-asc":
@@ -55,9 +34,8 @@ export const sortProducts = (
       case "price-desc":
         return Number(b.price) - Number(a.price);
       case "name":
-        return a.name.localeCompare(b.name);
       default:
-        return 0;
+        return a.name.localeCompare(b.name);
     }
   });
 };
