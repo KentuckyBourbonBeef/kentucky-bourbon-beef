@@ -18,13 +18,16 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
 
   const handleCheckout = async () => {
     try {
+      console.log("Starting checkout process...");
+      console.log("Selected plan ID:", selectedPlanId);
+      
       if (!selectedPlanId) {
         toast.error("Please select a subscription plan");
         return;
       }
-      
-      console.log("Starting checkout process with plan:", selectedPlanId);
+
       const { error, url } = await createCheckoutSession(selectedPlanId);
+      console.log("Checkout session result:", { error, url });
       
       if (error) {
         console.error("Checkout error:", error);

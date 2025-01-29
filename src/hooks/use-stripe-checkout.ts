@@ -5,18 +5,19 @@ export function useStripeCheckout() {
   const [loading, setLoading] = useState(false);
 
   const createCheckoutSession = async (priceId: string) => {
+    console.log("Starting createCheckoutSession with priceId:", priceId);
     setLoading(true);
+    
     try {
-      console.log("Creating checkout session with price:", priceId);
-      
+      console.log("Invoking create-checkout function...");
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { priceId },
       });
 
-      console.log("Supabase function response:", { data, error });
+      console.log("Function response:", { data, error });
 
       if (error) {
-        console.error("Supabase function error:", error);
+        console.error("Function error:", error);
         return { url: null, error };
       }
 
@@ -25,10 +26,10 @@ export function useStripeCheckout() {
         return { url: null, error: new Error("No checkout URL returned") };
       }
 
-      console.log("Checkout URL received:", data.url);
+      console.log("Successfully received checkout URL:", data.url);
       return { url: data.url, error: null };
     } catch (error) {
-      console.error('Error creating checkout session:', error);
+      console.error('Error in createCheckoutSession:', error);
       return { url: null, error };
     } finally {
       setLoading(false);
