@@ -15,27 +15,34 @@ const Hero = () => {
           Kentucky Bourbon Beef
         </h1>
         <div className="inline-block relative perspective-[1000px]">
-          <div className="font-serif italic text-bourbon-100 text-lg md:text-2xl mb-8 font-bold relative px-16 py-4
+          <div className="font-serif italic text-bourbon-100/90 text-lg md:text-2xl mb-8 font-bold relative px-16 py-4
             before:content-[''] before:absolute before:inset-0
             after:content-[''] after:absolute after:inset-0
-            transform-style-preserve-3d hover:transform hover:rotate-y-2 transition-transform duration-300
-            [background-image:repeating-linear-gradient(90deg,#4a332b,#6b4c41_4px,#855e4f_8px,#6b4c41_12px,#4a332b_16px)]
-            [box-shadow:0_10px_20px_rgba(0,0,0,0.3),inset_0_2px_4px_rgba(255,255,255,0.2)]
-            rounded-md
-            before:[background-image:linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%,rgba(255,255,255,0.1)),linear-gradient(-45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%,rgba(255,255,255,0.1))]
-            before:bg-[length:20px_20px]
-            after:[background-image:radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.2),transparent_60%)]">
+            transform-style-preserve-3d hover:transform hover:rotate-y-3 transition-transform duration-500
+            [background-image:repeating-linear-gradient(90deg,#2a1810,#3a241a_2px,#4a2e22_4px,#5a3828_8px,#3a241a_12px,#2a1810_16px)]
+            [box-shadow:0_15px_25px_rgba(0,0,0,0.4),inset_0_2px_4px_rgba(255,255,255,0.1)]
+            rounded-lg
+            before:[background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+PGZpbHRlciBpZD0iYSIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjg1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwLjUgMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIwLjQiLz48L3N2Zz4=')]
+            before:opacity-30
+            before:mix-blend-overlay
+            after:[background-image:radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_70%)]
+            after:mix-blend-overlay">
             BDC Butcher Distillers Cut
-            <span className="absolute -right-2 -top-1 font-sans text-[0.65em] tracking-wider font-normal 
-              px-2 py-1 transform rotate-12
-              [text-shadow:1px_1px_2px_rgba(0,0,0,0.6)]
+            <span className="absolute -right-3 top-0 font-sans text-[0.65em] tracking-wider font-normal 
+              px-3 py-1.5 transform rotate-12
+              [text-shadow:1px_1px_3px_rgba(0,0,0,0.8)]
               before:content-[''] before:absolute before:inset-0
-              before:[background-image:linear-gradient(45deg,rgba(139,69,19,0.4),rgba(139,69,19,0.1))]
-              before:opacity-80 before:-z-10
+              before:[background-image:linear-gradient(45deg,rgba(42,24,16,0.9),rgba(58,36,26,0.7))]
+              before:opacity-90 before:-z-10 before:rounded-sm
               after:content-[''] after:absolute after:inset-0
-              after:[background-image:repeating-linear-gradient(45deg,transparent,transparent_2px,rgba(0,0,0,0.1)_2px,rgba(0,0,0,0.1)_4px)]
-              after:opacity-30 after:-z-20
-              [filter:brightness(1.2)_contrast(1.1)]">
+              after:[background-image:repeating-linear-gradient(45deg,rgba(0,0,0,0.2),transparent_1px,transparent_2px,rgba(0,0,0,0.2)_3px)]
+              after:opacity-40 after:-z-20
+              [filter:brightness(0.9)_contrast(1.2)]
+              [transform-style:preserve-3d]
+              [transform:rotateX(10deg)_translateZ(2px)]
+              text-bourbon-100/80
+              border-bourbon-900/30 border rounded-sm
+              [box-shadow:inset_0_0_4px_rgba(0,0,0,0.5)]">
               ™
             </span>
           </div>
