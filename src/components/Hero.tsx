@@ -56,11 +56,11 @@ const Hero = () => {
             BDC Butcher Distiller's Cut™
           </h2>
 
-          {/* Updated CTA Button */}
+          {/* Enhanced CTA Button */}
           <div className="mt-12">
             <Button 
               size="lg" 
-              className="bg-bourbon-600/80 hover:bg-bourbon-700 text-bourbon-50 min-w-[240px] text-lg h-14 backdrop-blur-sm group transition-all duration-300 hover:scale-105"
+              className="bg-beef-600 hover:bg-beef-700 text-white min-w-[240px] text-lg h-14 shadow-lg shadow-beef-600/30 hover:shadow-beef-700/40 group transition-all duration-300 hover:scale-105 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-beef-500/0 before:via-white/10 before:to-beef-500/0 before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700 before:ease-in-out"
               onClick={() => scrollToSection('products')}
             >
               <Beef className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
