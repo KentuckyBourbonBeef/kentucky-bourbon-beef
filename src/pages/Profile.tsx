@@ -20,29 +20,45 @@ const Profile = () => {
     const fetchCustomerData = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
-        if (!user) throw new Error("No user found");
+        if (!user) {
+          navigate("/auth");
+          return;
+        }
 
         const { data, error } = await supabase
           .from("customers")
           .select("*")
           .eq("id", user.id)
-          .single();
+          .maybeSingle();
 
         if (error) throw error;
+        
+        if (!data) {
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Customer profile not found. Please try logging in again.",
+          });
+          navigate("/auth");
+          return;
+        }
+
         setCustomerData(data);
       } catch (error: any) {
+        console.error("Profile error:", error);
         toast({
           variant: "destructive",
           title: "Error",
           description: error.message,
         });
+        navigate("/auth");
       } finally {
         setLoading(false);
       }
     };
 
     fetchCustomerData();
-  }, [toast]);
+  }, [toast, navigate]);
 
   if (loading) {
     return (
@@ -52,10 +68,13 @@ const Profile = () => {
     );
   }
 
+  if (!customerData) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-bourbon-50/50">
       <div className="container mx-auto px-4 py-8 animate-fadeIn">
-        {/* Back Button */}
         <Button
           variant="ghost"
           className="mb-6 text-bourbon-700 hover:text-bourbon-900 hover:bg-bourbon-100"
