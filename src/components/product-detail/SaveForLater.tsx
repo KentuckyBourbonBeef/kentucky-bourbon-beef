@@ -16,7 +16,12 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
   const handleSave = async () => {
     try {
       setIsSaving(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      
+      if (authError) {
+        console.error("Auth error:", authError);
+        throw authError;
+      }
       
       if (!user) {
         toast({
@@ -27,21 +32,39 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
         return;
       }
 
-      const { error } = await supabase
+      // First, verify the customer record exists
+      const { data: customerData, error: customerError } = await supabase
+        .from("customers")
+        .select("id")
+        .eq("id", user.id)
+        .single();
+
+      if (customerError) {
+        console.error("Customer error:", customerError);
+        throw customerError;
+      }
+
+      if (!customerData) {
+        console.error("No customer record found");
+        throw new Error("Customer record not found");
+      }
+
+      const { error: saveError } = await supabase
         .from("saved_items")
         .insert({
           customer_id: user.id,
           product_id: product.id,
         });
 
-      if (error) {
-        if (error.code === '23505') { // Unique violation
+      if (saveError) {
+        console.error("Save error:", saveError);
+        if (saveError.code === '23505') { // Unique violation
           toast({
             title: "Already saved",
             description: "This item is already in your saved items",
           });
         } else {
-          throw error;
+          throw saveError;
         }
       } else {
         toast({
@@ -49,11 +72,11 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
           description: "Item has been added to your saved items",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error saving item:", error);
       toast({
         title: "Error",
-        description: "Could not save the item. Please try again.",
+        description: error.message || "Could not save the item. Please try again.",
         variant: "destructive",
       });
     } finally {
