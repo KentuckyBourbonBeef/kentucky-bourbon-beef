@@ -143,6 +143,7 @@ export type Database = {
           is_bdc_certified: boolean | null
           name: string
           price: number
+          pricing_tiers: Json | null
           stock_quantity: number
           updated_at: string
         }
@@ -157,6 +158,7 @@ export type Database = {
           is_bdc_certified?: boolean | null
           name: string
           price: number
+          pricing_tiers?: Json | null
           stock_quantity?: number
           updated_at?: string
         }
@@ -171,6 +173,7 @@ export type Database = {
           is_bdc_certified?: boolean | null
           name?: string
           price?: number
+          pricing_tiers?: Json | null
           stock_quantity?: number
           updated_at?: string
         }

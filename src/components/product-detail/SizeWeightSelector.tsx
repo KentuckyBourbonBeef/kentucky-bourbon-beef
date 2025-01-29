@@ -10,12 +10,18 @@ interface WeightOption {
   price: number;
 }
 
+interface PricingTier {
+  quantity: number;
+  price_per_unit: number;
+}
+
 interface SizeWeightSelectorProps {
   product: Product;
   onWeightSelect: (weight: string, price: number) => void;
+  selectedQuantity?: number;
 }
 
-const SizeWeightSelector = ({ product, onWeightSelect }: SizeWeightSelectorProps) => {
+const SizeWeightSelector = ({ product, onWeightSelect, selectedQuantity = 1 }: SizeWeightSelectorProps) => {
   // Weight options based on product category
   const getWeightOptions = (category: string): WeightOption[] => {
     const basePrice = Number(product.price);
@@ -46,6 +52,17 @@ const SizeWeightSelector = ({ product, onWeightSelect }: SizeWeightSelectorProps
     }
   };
 
+  const getPriceForQuantity = (basePrice: number, quantity: number): number => {
+    if (!product.pricing_tiers || !Array.isArray(product.pricing_tiers)) return basePrice;
+
+    const tiers = product.pricing_tiers as PricingTier[];
+    const applicableTier = [...tiers]
+      .sort((a, b) => b.quantity - a.quantity)
+      .find(tier => quantity >= tier.quantity);
+
+    return applicableTier ? applicableTier.price_per_unit : basePrice;
+  };
+
   const weightOptions = getWeightOptions(product.category);
   const [selectedWeight, setSelectedWeight] = useState(weightOptions[0].value);
 
@@ -53,7 +70,8 @@ const SizeWeightSelector = ({ product, onWeightSelect }: SizeWeightSelectorProps
     setSelectedWeight(value);
     const option = weightOptions.find(opt => opt.value === value);
     if (option) {
-      onWeightSelect(value, option.price);
+      const pricePerUnit = getPriceForQuantity(option.price, selectedQuantity);
+      onWeightSelect(value, pricePerUnit);
     }
   };
 
@@ -62,7 +80,7 @@ const SizeWeightSelector = ({ product, onWeightSelect }: SizeWeightSelectorProps
       <div className="flex justify-between items-center">
         <Label className="text-lg font-medium text-bourbon-800">Select Size</Label>
         <span className="text-sm text-gray-500">
-          Prices vary by weight
+          Prices vary by weight and quantity
         </span>
       </div>
       
@@ -71,27 +89,35 @@ const SizeWeightSelector = ({ product, onWeightSelect }: SizeWeightSelectorProps
         onValueChange={handleWeightChange}
         className="grid grid-cols-3 gap-4"
       >
-        {weightOptions.map((option) => (
-          <Label
-            key={option.value}
-            className={cn(
-              "flex flex-col items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all duration-200",
-              selectedWeight === option.value
-                ? "border-bourbon-600 bg-bourbon-50"
-                : "border-gray-200 hover:border-bourbon-300"
-            )}
-          >
-            <RadioGroupItem
-              value={option.value}
-              id={option.value}
-              className="sr-only"
-            />
-            <span className="text-lg font-semibold mb-1">{option.label}</span>
-            <span className="text-sm text-gray-600">
-              ${option.price.toFixed(2)}
-            </span>
-          </Label>
-        ))}
+        {weightOptions.map((option) => {
+          const pricePerUnit = getPriceForQuantity(option.price, selectedQuantity);
+          return (
+            <Label
+              key={option.value}
+              className={cn(
+                "flex flex-col items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all duration-200",
+                selectedWeight === option.value
+                  ? "border-bourbon-600 bg-bourbon-50"
+                  : "border-gray-200 hover:border-bourbon-300"
+              )}
+            >
+              <RadioGroupItem
+                value={option.value}
+                id={option.value}
+                className="sr-only"
+              />
+              <span className="text-lg font-semibold mb-1">{option.label}</span>
+              <span className="text-sm text-gray-600">
+                ${pricePerUnit.toFixed(2)}
+                {selectedQuantity > 1 && (
+                  <span className="text-xs text-bourbon-600 block">
+                    per unit for {selectedQuantity}
+                  </span>
+                )}
+              </span>
+            </Label>
+          );
+        })}
       </RadioGroup>
     </div>
   );
