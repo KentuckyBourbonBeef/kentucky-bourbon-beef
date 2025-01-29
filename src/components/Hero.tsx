@@ -56,15 +56,17 @@ const Hero = () => {
             BDC Butcher Distiller's Cut™
           </h2>
 
-          {/* Enhanced CTA Button */}
+          {/* Glowing CTA Button */}
           <div className="mt-12">
             <Button 
               size="lg" 
-              className="bg-beef-600 hover:bg-beef-700 text-white min-w-[240px] text-lg h-14 shadow-lg shadow-beef-600/30 hover:shadow-beef-700/40 group transition-all duration-300 hover:scale-105 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-beef-500/0 before:via-white/10 before:to-beef-500/0 before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700 before:ease-in-out"
+              className="bg-beef-800/90 hover:bg-beef-900 min-w-[240px] text-lg h-14 group transition-all duration-300 hover:scale-105"
               onClick={() => scrollToSection('products')}
             >
-              <Beef className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
-              Savor the Tradition
+              <Beef className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform text-beef-200" />
+              <span className="text-beef-100 font-medium animate-pulse-subtle drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                Savor the Tradition
+              </span>
             </Button>
           </div>
         </div>
