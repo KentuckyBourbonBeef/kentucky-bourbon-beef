@@ -7,6 +7,14 @@ import ProductGallery from "@/components/product-detail/ProductGallery";
 import ProductInfo from "@/components/product-detail/ProductInfo";
 import AddToCartSection from "@/components/product-detail/AddToCartSection";
 import RelatedProducts from "@/components/product-detail/RelatedProducts";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -70,13 +78,44 @@ const ProductDetail = () => {
   return (
     <main className="min-h-screen py-12 animate-fade-in">
       <div className="container mx-auto px-4">
-        <Link 
-          to="/" 
-          className="inline-flex items-center text-bourbon-600 hover:text-bourbon-700 mb-8 group"
-        >
-          <ChevronLeft className="h-4 w-4 mr-1 transition-transform group-hover:-translate-x-1" />
-          Back to Products
-        </Link>
+        <div className="mb-8 space-y-4">
+          <Link 
+            to="/" 
+            className="inline-flex items-center text-bourbon-600 hover:text-bourbon-700 group transition-colors"
+          >
+            <ChevronLeft className="h-4 w-4 mr-1 transition-transform group-hover:-translate-x-1" />
+            Back to Products
+          </Link>
+
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className="text-bourbon-600 hover:text-bourbon-700">
+                  Home
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              
+              <BreadcrumbSeparator />
+              
+              <BreadcrumbItem>
+                <BreadcrumbLink 
+                  href="/" 
+                  className="text-bourbon-600 hover:text-bourbon-700 capitalize"
+                >
+                  {product.category}s
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              
+              <BreadcrumbSeparator />
+              
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-bourbon-800">
+                  {product.name}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <ProductGallery product={product} />
