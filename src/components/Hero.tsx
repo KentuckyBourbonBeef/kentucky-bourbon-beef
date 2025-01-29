@@ -21,7 +21,7 @@ const Hero = () => {
       setCurrentImageIndex((prevIndex) => 
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 7000); // Slowed down transition time to allow better viewing
+    }, 7000);
 
     return () => clearInterval(timer);
   }, []);
@@ -48,13 +48,13 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <div className="animate-fadeIn space-y-12">
-          {/* Main Title */}
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight">
+          {/* Main Title - Updated with softer color */}
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-bourbon-50/90 tracking-tight">
             Kentucky Bourbon Beef
           </h1>
 
-          {/* Branded Subtitle */}
-          <h2 className="font-serif italic text-2xl md:text-3xl text-bourbon-100 font-medium">
+          {/* Branded Subtitle - Also softened */}
+          <h2 className="font-serif italic text-2xl md:text-3xl text-bourbon-100/80 font-medium">
             BDC Butcher Distiller's Cut™
           </h2>
 
@@ -62,7 +62,7 @@ const Hero = () => {
           <div className="mt-12">
             <Button 
               size="lg" 
-              className="bg-bourbon-600/80 hover:bg-bourbon-700 text-white min-w-[200px] text-lg h-14 backdrop-blur-sm"
+              className="bg-bourbon-600/80 hover:bg-bourbon-700 text-bourbon-50 min-w-[200px] text-lg h-14 backdrop-blur-sm"
               onClick={() => scrollToSection('products')}
             >
               Shop Premium Cuts
@@ -70,9 +70,9 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Subtle Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-60">
-          <ArrowDownCircle className="h-8 w-8 text-white" />
+        {/* Subtle Scroll Indicator - Also softened */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+          <ArrowDownCircle className="h-8 w-8 text-bourbon-50/80" />
         </div>
       </div>
     </div>
