@@ -1,32 +1,22 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts"
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts'
 import Stripe from 'https://esm.sh/stripe@14.21.0'
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0'
-import { handleSubscriptionEvent, handleSubscriptionDeletion } from './subscription-handlers.ts'
+import { corsHeaders } from '../_shared/cors.ts'
+import { handleSubscriptionCreated, handleSubscriptionUpdated, handleSubscriptionDeleted } from './subscription-handlers.ts'
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
   apiVersion: '2023-10-16',
+  httpClient: Stripe.createFetchHttpClient(),
 })
 
-const supabaseClient = createClient(
-  Deno.env.get('SUPABASE_URL') ?? '',
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-)
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
-
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders })
+    return new Response('ok', { headers: corsHeaders })
   }
 
   try {
     const signature = req.headers.get('stripe-signature')
     if (!signature) {
-      return new Response('No signature', { status: 400 })
+      throw new Error('No signature provided')
     }
 
     const body = await req.text()
@@ -41,29 +31,26 @@ serve(async (req) => {
       webhookSecret
     )
 
-    console.log('Processing webhook event:', event.type)
-
     switch (event.type) {
       case 'customer.subscription.created':
-      case 'customer.subscription.updated': {
-        await handleSubscriptionEvent(event, supabaseClient, event.data.object as Stripe.Subscription, stripe)
+        await handleSubscriptionCreated(event)
         break
-      }
-
-      case 'customer.subscription.deleted': {
-        await handleSubscriptionDeletion(supabaseClient, event.data.object as Stripe.Subscription)
+      case 'customer.subscription.updated':
+        await handleSubscriptionUpdated(event)
         break
-      }
+      case 'customer.subscription.deleted':
+        await handleSubscriptionDeleted(event)
+        break
     }
 
-    return new Response(JSON.stringify({ received: true }), {
+    return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
     })
   } catch (error) {
-    console.error('Error processing webhook:', error)
     return new Response(JSON.stringify({ error: error.message }), {
-      status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 400,
     })
   }
 })
