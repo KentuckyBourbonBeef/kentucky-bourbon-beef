@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useStripeCheckout } from "@/hooks/use-stripe-checkout";
-import { useState } from "react";
 import { toast } from "sonner";
 import { PlanSelector } from "./subscription/PlanSelector";
 import { useSubscriptionPlans } from "@/hooks/use-subscription-plans";
-import { supabase } from "@/integrations/supabase/client";
+import { useCheckout } from "@/hooks/use-checkout";
+import { useState } from "react";
 
 interface CartSummaryProps {
   total: number;
@@ -13,45 +13,15 @@ interface CartSummaryProps {
 }
 
 export function CartSummary({ total, onCheckout }: CartSummaryProps) {
-  const { createCheckoutSession, loading } = useStripeCheckout();
   const [selectedPlanId, setSelectedPlanId] = useState<string>("");
   const { data: subscriptionPlans, isLoading: plansLoading } = useSubscriptionPlans();
+  const { handleCheckout, isProcessing } = useCheckout();
 
-  const handleCheckout = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        toast.error("Please sign in to subscribe");
-        return;
-      }
-
-      if (!selectedPlanId) {
-        toast.error("Please select a subscription plan");
-        return;
-      }
-
-      console.log("Starting checkout process...");
-      console.log("Selected plan ID:", selectedPlanId);
-      
-      const { error, url } = await createCheckoutSession(selectedPlanId);
-      
-      if (error) {
-        console.error("Checkout error:", error);
-        toast.error("Failed to start checkout process. Please try again.");
-        return;
-      }
-      
-      if (url) {
-        console.log("Redirecting to checkout URL:", url);
-        window.location.href = url;
-      } else {
-        console.error("No checkout URL returned");
-        toast.error("Failed to create checkout session. Please try again.");
-      }
-    } catch (error) {
-      console.error("Checkout error:", error);
-      toast.error("An unexpected error occurred. Please try again.");
+  const initiateCheckout = async () => {
+    const checkoutUrl = await handleCheckout(selectedPlanId);
+    
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl;
     }
   };
 
@@ -83,11 +53,11 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
       <div className="space-y-2">
         <Button 
           className="w-full bg-bourbon-600 hover:bg-bourbon-700 transition-colors group"
-          onClick={handleCheckout}
-          disabled={loading || !selectedPlanId}
+          onClick={initiateCheckout}
+          disabled={isProcessing || !selectedPlanId}
         >
           <ShoppingCart className="mr-2 h-4 w-4 transition-transform group-hover:scale-110" />
-          {loading ? "Processing..." : "Subscribe Now"}
+          {isProcessing ? "Processing..." : "Subscribe Now"}
         </Button>
       </div>
     </div>
