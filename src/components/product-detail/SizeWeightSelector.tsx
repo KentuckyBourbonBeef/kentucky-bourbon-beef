@@ -1,8 +1,8 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Product } from "@/types/product";
-import { WeightOption } from "./weight-selector/WeightOption";
-import { useWeightOptions } from "./weight-selector/useWeightOptions";
+import { WeightOptionCard } from "./weight-selector/WeightOptionCard";
+import { useWeightPricing } from "./weight-selector/useWeightPricing";
 import { useState } from "react";
 
 interface SizeWeightSelectorProps {
@@ -16,7 +16,7 @@ const SizeWeightSelector = ({
   onWeightSelect, 
   selectedQuantity = 1 
 }: SizeWeightSelectorProps) => {
-  const { getWeightOptions, getPriceForQuantity } = useWeightOptions(product.category, Number(product.price));
+  const { getWeightOptions, getPriceForQuantity } = useWeightPricing(product.category, Number(product.price));
   const weightOptions = getWeightOptions(product.category);
   const [selectedWeight, setSelectedWeight] = useState(weightOptions[0].value);
 
@@ -54,7 +54,7 @@ const SizeWeightSelector = ({
             product.pricing_tiers as unknown as { quantity: number; price_per_unit: number; }[] | null
           );
           return (
-            <WeightOption
+            <WeightOptionCard
               key={option.value}
               value={option.value}
               label={option.label}
