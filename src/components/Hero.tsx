@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useScrollToSection } from "@/hooks/use-scroll";
-import { ArrowDownCircle } from "lucide-react";
+import { ArrowDownCircle, Beef } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const Hero = () => {
@@ -48,29 +48,27 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <div className="animate-fadeIn space-y-12">
-          {/* Main Title - Updated with softer color */}
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-bourbon-50/90 tracking-tight">
             Kentucky Bourbon Beef
           </h1>
 
-          {/* Branded Subtitle - Also softened */}
           <h2 className="font-serif italic text-2xl md:text-3xl text-bourbon-100/80 font-medium">
             BDC Butcher Distiller's Cut™
           </h2>
 
-          {/* CTA Button */}
+          {/* Updated CTA Button */}
           <div className="mt-12">
             <Button 
               size="lg" 
-              className="bg-bourbon-600/80 hover:bg-bourbon-700 text-bourbon-50 min-w-[200px] text-lg h-14 backdrop-blur-sm"
+              className="bg-bourbon-600/80 hover:bg-bourbon-700 text-bourbon-50 min-w-[240px] text-lg h-14 backdrop-blur-sm group transition-all duration-300 hover:scale-105"
               onClick={() => scrollToSection('products')}
             >
-              Shop Premium Cuts
+              <Beef className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
+              Savor the Tradition
             </Button>
           </div>
         </div>
 
-        {/* Subtle Scroll Indicator - Also softened */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
           <ArrowDownCircle className="h-8 w-8 text-bourbon-50/80" />
         </div>
