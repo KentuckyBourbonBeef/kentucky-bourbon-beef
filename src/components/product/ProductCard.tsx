@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Database } from "@/integrations/supabase/types";
 import { ShoppingCart } from "lucide-react";
+import ProductBadges from "./ProductBadges";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 
@@ -23,17 +23,11 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
               alt={product.name}
               className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
             />
-            {product.is_bdc_certified && (
-              <Badge className="absolute top-4 right-4 bg-bourbon-600 group cursor-help">
-                <span className="relative">
-                  BDC - Butcher Distiller's Cut™
-                  <span className="invisible group-hover:visible absolute left-0 top-full mt-2 w-64 p-2 bg-white text-bourbon-800 text-xs rounded shadow-lg z-50">
-                    Our Butcher Distiller's Cut™ beef is finished with Bourbon Grains, 
-                    creating a one-of-a-kind culinary experience that celebrates Kentucky's rich heritage of exceptional beef and bourbon.
-                  </span>
-                </span>
-              </Badge>
-            )}
+            <ProductBadges
+              agingTier={product.aging_tier}
+              agingDuration={product.aging_duration}
+              isBdcCertified={product.is_bdc_certified}
+            />
           </div>
         </CardHeader>
       </Link>
@@ -52,10 +46,6 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             <span className="text-sm text-gray-600 capitalize">
               {product.category}
             </span>
-          </div>
-          <div className="text-sm text-gray-600">
-            <p className="font-medium">{product.aging_tier}</p>
-            <p>Aged for {product.aging_duration} days</p>
           </div>
         </div>
       </CardContent>
