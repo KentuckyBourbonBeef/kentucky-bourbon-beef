@@ -10,6 +10,8 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import ProductDetail from "./pages/ProductDetail";
 import Profile from "./pages/Profile";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 import { supabase } from "./integrations/supabase/client";
 import { CartProvider } from "./contexts/CartContext";
 
@@ -71,6 +73,8 @@ const App = () => {
                 path="/auth"
                 element={!session ? <Auth /> : <Navigate to="/" />}
               />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<Terms />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
