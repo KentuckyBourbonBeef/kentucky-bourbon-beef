@@ -22,17 +22,17 @@ export function SavedItems({ onClose }: SavedItemsProps) {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { data: customerData } = await supabase
-        .from("customers")
-        .select("preferred_cuts")
-        .eq("id", user.id)
-        .single();
+      const { data: savedItemsData } = await supabase
+        .from("saved_items")
+        .select("product_id")
+        .eq("customer_id", user.id);
 
-      if (customerData?.preferred_cuts) {
+      if (savedItemsData) {
+        const productIds = savedItemsData.map(item => item.product_id);
         const { data: products } = await supabase
           .from("products")
           .select("*")
-          .in("id", customerData.preferred_cuts);
+          .in("id", productIds);
         
         setSavedItems(products || []);
       }
@@ -42,11 +42,24 @@ export function SavedItems({ onClose }: SavedItemsProps) {
     fetchSavedItems();
   }, []);
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = async (product: Product) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    // Remove from saved items
+    await supabase
+      .from("saved_items")
+      .delete()
+      .eq("customer_id", user.id)
+      .eq("product_id", product.id);
+
+    // Add to cart
     addItem(product);
+    setSavedItems(current => current.filter(item => item.id !== product.id));
+    
     toast({
       title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
+      description: `${product.name} has been moved to your cart.`,
     });
   };
 

@@ -271,6 +271,42 @@ export type Database = {
           },
         ]
       }
+      saved_items: {
+        Row: {
+          created_at: string
+          customer_id: string
+          id: string
+          product_id: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          id?: string
+          product_id: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          id?: string
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_items_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "saved_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
