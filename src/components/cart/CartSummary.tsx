@@ -26,12 +26,15 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
       const { error, url } = await createCheckoutSession(selectedPlanId);
       
       if (error) {
+        console.error("Checkout error:", error);
         toast.error("Failed to start checkout process");
         return;
       }
       
       if (url) {
         window.location.href = url;
+      } else {
+        toast.error("No checkout URL returned");
       }
     } catch (error) {
       console.error("Checkout error:", error);
@@ -64,14 +67,16 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
         />
       )}
 
-      <Button
-        className="w-full bg-bourbon-600 hover:bg-bourbon-700 transition-colors group"
-        onClick={handleCheckout}
-        disabled={loading || !selectedPlanId}
-      >
-        <ShoppingCart className="mr-2 h-4 w-4 transition-transform group-hover:scale-110" />
-        {loading ? "Processing..." : "Subscribe Now"}
-      </Button>
+      <div className="space-y-2">
+        <Button
+          className="w-full bg-bourbon-600 hover:bg-bourbon-700 transition-colors group"
+          onClick={handleCheckout}
+          disabled={loading || !selectedPlanId}
+        >
+          <ShoppingCart className="mr-2 h-4 w-4 transition-transform group-hover:scale-110" />
+          {loading ? "Processing..." : "Subscribe Now"}
+        </Button>
+      </div>
     </div>
   );
 }
