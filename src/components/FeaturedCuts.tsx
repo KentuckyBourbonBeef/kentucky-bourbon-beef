@@ -8,6 +8,20 @@ const FeaturedCuts = () => {
   const { data: products, isLoading, error } = useProducts();
   const { toast } = useToast();
 
+  const getCategoryImage = (category: string) => {
+    const imageMap: Record<string, string> = {
+      ribeye: "/lovable-uploads/972d97c9-c672-448a-b9a5-69950cd6a5f1.png",
+      strip: "/lovable-uploads/81e2bf7b-eb02-49f0-afe4-3302a94a27a0.png",
+      tenderloin: "/lovable-uploads/58f2f4e4-cb5e-4cce-a375-18ec023efee7.png",
+      tomahawk: "/lovable-uploads/03a8f629-b2fd-4729-8c3b-281f41bdc719.png",
+      tbone: "/lovable-uploads/afd284f1-4ee0-4d28-b9b5-b8d12cdb6cb0.png",
+      porterhouse: "/lovable-uploads/ebf80843-0e99-47e5-b606-b514b484f838.png",
+      other: "/placeholder.svg"
+    };
+    
+    return imageMap[category] || imageMap.other;
+  };
+
   if (isLoading) {
     return (
       <section className="py-20 bg-bourbon-50">
@@ -40,21 +54,10 @@ const FeaturedCuts = () => {
               <CardHeader className="p-0">
                 <div className="aspect-[4/3] relative">
                   <img
-                    src={product.image_url || "https://images.unsplash.com/photo-1615937722923-67f6deaf2cc9"}
-                    alt={product.name}
+                    src={product.image_url || getCategoryImage(product.category)}
+                    alt={`${product.name} - ${product.category} cut`}
                     className="object-cover w-full h-full"
                   />
-                  {product.is_bdc_certified && (
-                    <Badge className="absolute top-4 right-4 bg-bourbon-600 group cursor-help">
-                      <span className="relative">
-                        BDC - Butcher Distiller's Cut™
-                        <span className="invisible group-hover:visible absolute left-0 top-full mt-2 w-64 p-2 bg-white text-bourbon-800 text-xs rounded shadow-lg">
-                          Our Butcher Distiller's Cut™ beef is uniquely finished with nutrient-rich Bourbon Grains, 
-                          creating exceptionally tender beef with subtle bourbon-inspired flavors while supporting sustainable farming practices.
-                        </span>
-                      </span>
-                    </Badge>
-                  )}
                 </div>
               </CardHeader>
               <CardContent className="p-6">
