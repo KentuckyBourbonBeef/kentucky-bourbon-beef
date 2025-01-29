@@ -1,6 +1,47 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0'
 import Stripe from 'https://esm.sh/stripe@14.21.0'
-import { Database } from '../../../src/integrations/supabase/types'
+
+// Define the types inline for the Edge Function context
+type Database = {
+  public: {
+    Tables: {
+      customers: {
+        Row: {
+          id: string;
+          stripe_customer_id: string;
+        }
+      }
+      subscriptions: {
+        Row: {
+          id: string;
+          customer_id: string;
+          stripe_subscription_id: string;
+          status: string;
+          plan_id: string;
+          current_period_start: string;
+          current_period_end: string;
+          cancel_at_period_end: boolean;
+        }
+        Insert: {
+          id?: string;
+          customer_id: string;
+          stripe_subscription_id: string;
+          status: string;
+          plan_id: string;
+          current_period_start?: string;
+          current_period_end?: string;
+          cancel_at_period_end?: boolean;
+        }
+        Update: {
+          status?: string;
+          current_period_start?: string;
+          current_period_end?: string;
+          cancel_at_period_end?: boolean;
+        }
+      }
+    }
+  }
+}
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
   apiVersion: '2023-10-16',
@@ -30,8 +71,8 @@ export async function handleSubscriptionCreated(event: Stripe.Event) {
     stripe_subscription_id: subscription.id,
     status: subscription.status,
     plan_id: subscription.items.data[0].price.id,
-    current_period_start: new Date(subscription.current_period_start * 1000),
-    current_period_end: new Date(subscription.current_period_end * 1000),
+    current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+    current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
     cancel_at_period_end: subscription.cancel_at_period_end,
   })
 }
@@ -43,8 +84,8 @@ export async function handleSubscriptionUpdated(event: Stripe.Event) {
     .from('subscriptions')
     .update({
       status: subscription.status,
-      current_period_start: new Date(subscription.current_period_start * 1000),
-      current_period_end: new Date(subscription.current_period_end * 1000),
+      current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
       cancel_at_period_end: subscription.cancel_at_period_end,
     })
     .eq('stripe_subscription_id', subscription.id)
