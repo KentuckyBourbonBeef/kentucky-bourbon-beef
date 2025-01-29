@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Product } from "@/types/product";
 import { useCart } from "@/contexts/CartContext";
-import { useToast } from "@/hooks/use-toast";
 
 export const useAddToCart = (product: Product) => {
-  const { toast } = useToast();
   const { addItem } = useCart();
   const [isAdding, setIsAdding] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -16,11 +14,6 @@ export const useAddToCart = (product: Product) => {
     addItem(product);
     setIsAdding(false);
     setShowSuccess(true);
-    
-    toast({
-      title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
-    });
 
     setTimeout(() => {
       setShowSuccess(false);
