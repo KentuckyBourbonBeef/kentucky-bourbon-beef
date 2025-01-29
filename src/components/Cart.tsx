@@ -12,7 +12,7 @@ import { CartHeader } from "./cart/CartHeader";
 import { CartContent } from "./cart/CartContent";
 import { CartSummary } from "./cart/CartSummary";
 import { SavedItems } from "./cart/SavedItems";
-import { ShareDialog } from "./cart/ShareDialog";
+import { ShareDialog } from "@/components/product-detail/share/ShareDialog";
 
 export function Cart() {
   const { items, removeItem, updateQuantity, total } = useCart();
