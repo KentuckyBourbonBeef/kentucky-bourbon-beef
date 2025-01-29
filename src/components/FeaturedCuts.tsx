@@ -1,12 +1,13 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/use-products";
 import { useToast } from "@/components/ui/use-toast";
+import { useCart } from "@/contexts/CartContext";
 
 const FeaturedCuts = () => {
   const { data: products, isLoading, error } = useProducts();
   const { toast } = useToast();
+  const { addItem } = useCart();
 
   const getCategoryImage = (category: string) => {
     const imageMap: Record<string, string> = {
@@ -43,6 +44,20 @@ const FeaturedCuts = () => {
   }
 
   const featuredProducts = products?.slice(0, 3) || [];
+
+  const handleAddToCart = (product: any, e: React.MouseEvent) => {
+    addItem(product);
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart.`,
+      className: "absolute cursor-toast",
+      style: {
+        top: `${e.clientY}px`,
+        left: `${e.clientX}px`,
+        transform: 'translate(-50%, -100%)'
+      },
+    });
+  };
 
   return (
     <section className="py-20 bg-bourbon-50">
@@ -81,12 +96,7 @@ const FeaturedCuts = () => {
               <CardFooter>
                 <Button 
                   className="w-full bg-bourbon-600 hover:bg-bourbon-700"
-                  onClick={() => {
-                    toast({
-                      title: "Added to cart",
-                      description: `${product.name} has been added to your cart.`,
-                    });
-                  }}
+                  onClick={(e) => handleAddToCart(product, e)}
                 >
                   Add to Cart
                 </Button>

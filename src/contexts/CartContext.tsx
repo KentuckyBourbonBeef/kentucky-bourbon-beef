@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
-import { toast } from "sonner";
 import { Tables } from "@/integrations/supabase/types";
 
 type Product = Tables<"products">;
@@ -27,18 +26,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const existingItem = currentItems.find((item) => item.id === product.id);
       
       if (existingItem) {
-        toast.info("Item already in cart");
         return currentItems;
       }
 
-      toast.success("Added to cart");
       return [...currentItems, { ...product, quantity: 1 }];
     });
   }, []);
 
   const removeItem = useCallback((productId: string) => {
     setItems((currentItems) => currentItems.filter((item) => item.id !== productId));
-    toast.success("Removed from cart");
   }, []);
 
   const updateQuantity = useCallback((productId: string, quantity: number) => {
@@ -53,7 +49,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = useCallback(() => {
     setItems([]);
-    toast.success("Cart cleared");
   }, []);
 
   const total = items.reduce(
