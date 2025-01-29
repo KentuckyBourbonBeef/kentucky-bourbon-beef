@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useScrollToSection } from "@/hooks/use-scroll";
-import { ArrowDownCircle, Award, Clock, MapPin } from "lucide-react";
+import { ArrowDownCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const Hero = () => {
@@ -21,7 +21,7 @@ const Hero = () => {
       setCurrentImageIndex((prevIndex) => 
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000);
+    }, 7000); // Slowed down transition time to allow better viewing
 
     return () => clearInterval(timer);
   }, []);
@@ -32,7 +32,7 @@ const Hero = () => {
       {images.map((image, index) => (
         <div
           key={image}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 transition-opacity duration-2000 ease-in-out ${
             index === currentImageIndex ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -40,71 +40,39 @@ const Hero = () => {
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${image})` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60" />
           </div>
         </div>
       ))}
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-        <div className="animate-fadeIn space-y-8">
+      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <div className="animate-fadeIn space-y-12">
           {/* Main Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-tight">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight">
             Kentucky Bourbon Beef
           </h1>
 
           {/* Branded Subtitle */}
-          <div className="inline-block">
-            <h2 className="font-serif italic text-2xl md:text-3xl text-bourbon-100 font-bold">
-              BDC Butcher Distiller's Cut™
-            </h2>
-          </div>
+          <h2 className="font-serif italic text-2xl md:text-3xl text-bourbon-100 font-medium">
+            BDC Butcher Distiller's Cut™
+          </h2>
 
-          {/* Description */}
-          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed mt-6">
-            Experience the pinnacle of flavor where Kentucky's bourbon heritage meets premium dry-aged beef, 
-            crafted with the same patience and artistry as our finest spirits.
-          </p>
-
-          {/* Features */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-12 max-w-4xl mx-auto">
-            <div className="flex flex-col items-center space-y-3 p-4 rounded-lg bg-black/30 backdrop-blur-sm border border-bourbon-400/20">
-              <Award className="h-8 w-8 text-bourbon-400" />
-              <span className="text-white/90 font-medium">Bourbon-Grain Finished</span>
-            </div>
-            <div className="flex flex-col items-center space-y-3 p-4 rounded-lg bg-black/30 backdrop-blur-sm border border-bourbon-400/20">
-              <Clock className="h-8 w-8 text-bourbon-400" />
-              <span className="text-white/90 font-medium">45-Day Dry-Aged</span>
-            </div>
-            <div className="flex flex-col items-center space-y-3 p-4 rounded-lg bg-black/30 backdrop-blur-sm border border-bourbon-400/20">
-              <MapPin className="h-8 w-8 text-bourbon-400" />
-              <span className="text-white/90 font-medium">Kentucky Proud</span>
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8">
+          {/* CTA Button */}
+          <div className="mt-12">
             <Button 
               size="lg" 
-              className="bg-bourbon-600 hover:bg-bourbon-700 text-white min-w-[200px] text-lg h-14"
+              className="bg-bourbon-600/80 hover:bg-bourbon-700 text-white min-w-[200px] text-lg h-14 backdrop-blur-sm"
               onClick={() => scrollToSection('products')}
             >
               Shop Premium Cuts
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="bg-white/10 hover:bg-white/20 text-white border-white/20 min-w-[200px] text-lg h-14"
-              onClick={() => scrollToSection('about')}
-            >
-              Our Story
-            </Button>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <ArrowDownCircle className="h-8 w-8 text-white/60" />
+        {/* Subtle Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-60">
+          <ArrowDownCircle className="h-8 w-8 text-white" />
         </div>
       </div>
     </div>
