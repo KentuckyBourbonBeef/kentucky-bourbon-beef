@@ -9,6 +9,8 @@ import RelatedProducts from "@/components/product-detail/RelatedProducts";
 import ReviewsSection from "@/components/product-detail/ReviewsSection";
 import ProductDetailSkeleton from "@/components/product-detail/ProductDetailSkeleton";
 import ProductDetailBreadcrumbs from "@/components/product-detail/ProductDetailBreadcrumbs";
+import { ErrorState } from "@/components/product-detail/ErrorState";
+import { NotFoundState } from "@/components/product-detail/NotFoundState";
 import { useToast } from "@/hooks/use-toast";
 
 const ProductDetail = () => {
@@ -62,27 +64,9 @@ const ProductDetail = () => {
     enabled: !!product,
   });
 
-  if (error) {
-    return (
-      <div className="container mx-auto p-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-800">Error loading product</h1>
-        <p className="text-gray-600 mt-2">Please try again later</p>
-      </div>
-    );
-  }
-
-  if (isLoading) {
-    return <ProductDetailSkeleton />;
-  }
-
-  if (!product) {
-    return (
-      <div className="container mx-auto p-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-800">Product not found</h1>
-        <p className="text-gray-600 mt-2">The product you're looking for doesn't exist</p>
-      </div>
-    );
-  }
+  if (error) return <ErrorState />;
+  if (isLoading) return <ProductDetailSkeleton />;
+  if (!product) return <NotFoundState />;
 
   return (
     <main className="min-h-screen py-12 animate-fade-in">

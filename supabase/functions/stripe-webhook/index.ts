@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from 'https://esm.sh/stripe@14.21.0';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+import { handleSubscriptionEvent, handleSubscriptionDeletion } from '../../../src/utils/stripe-webhook/subscription-handlers.ts';
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
   apiVersion: '2023-10-16',
@@ -35,57 +36,12 @@ serve(async (req) => {
     switch (event.type) {
       case 'customer.subscription.created':
       case 'customer.subscription.updated': {
-        const subscription = event.data.object;
-        const customerId = subscription.customer;
-
-        // Get customer email from Stripe
-        const customer = await stripe.customers.retrieve(customerId as string);
-        if (!customer.email) break;
-
-        // Get user from Supabase
-        const { data: userData, error: userError } = await supabaseClient
-          .from('customers')
-          .select('id')
-          .eq('email', customer.email)
-          .single();
-
-        if (userError) throw userError;
-
-        // Get subscription plan from Supabase
-        const { data: planData, error: planError } = await supabaseClient
-          .from('subscription_plans')
-          .select('id')
-          .eq('stripe_price_id', subscription.items.data[0].price.id)
-          .single();
-
-        if (planError) throw planError;
-
-        // Update subscription in Supabase
-        const { error: subscriptionError } = await supabaseClient
-          .from('subscriptions')
-          .upsert({
-            customer_id: userData.id,
-            plan_id: planData.id,
-            stripe_subscription_id: subscription.id,
-            status: subscription.status,
-            current_period_start: new Date(subscription.current_period_start * 1000),
-            current_period_end: new Date(subscription.current_period_end * 1000),
-            cancel_at_period_end: subscription.cancel_at_period_end,
-          });
-
-        if (subscriptionError) throw subscriptionError;
+        await handleSubscriptionEvent(event, supabaseClient, event.data.object as Stripe.Subscription, stripe);
         break;
       }
 
       case 'customer.subscription.deleted': {
-        const subscription = event.data.object;
-        
-        const { error } = await supabaseClient
-          .from('subscriptions')
-          .update({ status: 'canceled' })
-          .eq('stripe_subscription_id', subscription.id);
-
-        if (error) throw error;
+        await handleSubscriptionDeletion(supabaseClient, event.data.object as Stripe.Subscription);
         break;
       }
     }
