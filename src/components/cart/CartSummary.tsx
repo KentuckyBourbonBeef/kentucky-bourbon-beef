@@ -23,6 +23,7 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
         return;
       }
       
+      console.log("Starting checkout with plan:", selectedPlanId);
       const { error, url } = await createCheckoutSession(selectedPlanId);
       
       if (error) {
@@ -32,8 +33,10 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
       }
       
       if (url) {
+        console.log("Redirecting to checkout URL:", url);
         window.location.href = url;
       } else {
+        console.error("No checkout URL returned");
         toast.error("No checkout URL returned");
       }
     } catch (error) {
@@ -68,7 +71,7 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
       )}
 
       <div className="space-y-2">
-        <Button
+        <Button 
           className="w-full bg-bourbon-600 hover:bg-bourbon-700 transition-colors group"
           onClick={handleCheckout}
           disabled={loading || !selectedPlanId}
