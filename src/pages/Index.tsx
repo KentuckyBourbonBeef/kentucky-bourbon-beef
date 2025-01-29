@@ -5,8 +5,8 @@ import About from "@/components/About";
 import FAQ from "@/components/FAQ";
 import ShareButtons from "@/components/ShareButtons";
 import { Button } from "@/components/ui/button";
-import { UserRound } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { UserRound, Shield, FileText } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -35,6 +35,31 @@ const Index = () => {
       <Process />
       <About />
       <FAQ />
+
+      {/* Footer */}
+      <footer className="bg-gray-100 py-6 mt-12">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center items-center space-x-6 text-sm text-gray-600">
+            <Link 
+              to="/privacy-policy" 
+              className="flex items-center hover:text-gray-900 transition-colors"
+            >
+              <Shield className="h-4 w-4 mr-1" />
+              Privacy Policy
+            </Link>
+            <Link 
+              to="/terms" 
+              className="flex items-center hover:text-gray-900 transition-colors"
+            >
+              <FileText className="h-4 w-4 mr-1" />
+              Terms of Service
+            </Link>
+          </div>
+          <div className="text-center mt-4 text-sm text-gray-500">
+            © {new Date().getFullYear()} Kentucky Bourbon Beef. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </main>
   );
 };
