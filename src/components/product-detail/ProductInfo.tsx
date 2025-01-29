@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Product } from "@/types/product";
 import AgingDetails from "./AgingDetails";
 import SizeWeightSelector from "./SizeWeightSelector";
