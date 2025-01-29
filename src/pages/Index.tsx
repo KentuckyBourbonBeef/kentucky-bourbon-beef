@@ -5,16 +5,47 @@ import About from "@/components/About";
 import FAQ from "@/components/FAQ";
 import ShareButtons from "@/components/ShareButtons";
 import { Button } from "@/components/ui/button";
-import { UserRound, Shield, FileText } from "lucide-react";
+import { UserRound, Shield, FileText, LogOut } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      toast({
+        title: "Signed out successfully",
+        description: "You have been signed out of your account.",
+      });
+      
+      navigate("/auth");
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Error signing out",
+        description: error.message,
+      });
+    }
+  };
 
   return (
     <main className="min-h-screen relative">
-      {/* Profile Button */}
-      <div className="absolute top-4 right-4 z-20">
+      {/* Profile and Sign Out Buttons */}
+      <div className="absolute top-4 right-4 z-20 flex gap-2">
+        <Button
+          variant="outline"
+          size="icon"
+          className="bg-white/80 backdrop-blur-sm hover:bg-white"
+          onClick={handleSignOut}
+        >
+          <LogOut className="h-5 w-5" />
+        </Button>
         <Button
           variant="outline"
           size="icon"
