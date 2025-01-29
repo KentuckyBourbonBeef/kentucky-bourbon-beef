@@ -16,14 +16,17 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
   const handleSave = async () => {
     try {
       setIsSaving(true);
+      console.log("Starting save process...");
+      
       const { data: { user }, error: authError } = await supabase.auth.getUser();
       
       if (authError) {
-        console.error("Auth error:", authError);
-        throw authError;
+        console.error("Authentication error:", authError);
+        throw new Error("Authentication failed. Please try logging in again.");
       }
       
       if (!user) {
+        console.log("No user found - redirecting to login");
         toast({
           title: "Authentication required",
           description: "Please sign in to save items",
@@ -32,7 +35,9 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
         return;
       }
 
-      // First, verify the customer record exists
+      console.log("User authenticated:", user.id);
+
+      // First, ensure customer record exists
       const { data: customerData, error: customerError } = await supabase
         .from("customers")
         .select("id")
@@ -40,15 +45,24 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
         .single();
 
       if (customerError) {
-        console.error("Customer error:", customerError);
-        throw customerError;
+        console.error("Customer lookup error:", customerError);
+        throw new Error("Unable to verify customer record. Please try again.");
       }
 
       if (!customerData) {
-        console.error("No customer record found");
-        throw new Error("Customer record not found");
+        console.error("No customer record found for user:", user.id);
+        // Try to create customer record
+        const { error: insertError } = await supabase
+          .from("customers")
+          .insert({ id: user.id });
+          
+        if (insertError) {
+          console.error("Failed to create customer record:", insertError);
+          throw new Error("Unable to create customer profile. Please try again.");
+        }
       }
 
+      console.log("Attempting to save item...");
       const { error: saveError } = await supabase
         .from("saved_items")
         .insert({
@@ -64,16 +78,17 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
             description: "This item is already in your saved items",
           });
         } else {
-          throw saveError;
+          throw new Error(saveError.message);
         }
       } else {
+        console.log("Item saved successfully");
         toast({
           title: "Saved for later",
           description: "Item has been added to your saved items",
         });
       }
     } catch (error: any) {
-      console.error("Error saving item:", error);
+      console.error("Error in save process:", error);
       toast({
         title: "Error",
         description: error.message || "Could not save the item. Please try again.",
@@ -93,7 +108,7 @@ const SaveForLater = ({ product }: SaveForLaterProps) => {
       disabled={isSaving}
     >
       <Heart className="mr-2 h-5 w-5" />
-      Save for Later
+      {isSaving ? "Saving..." : "Save for Later"}
     </Button>
   );
 };
