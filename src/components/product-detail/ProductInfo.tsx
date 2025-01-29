@@ -2,12 +2,10 @@ import { useState } from "react";
 import { Product } from "@/types/product";
 import AgingDetails from "./AgingDetails";
 import SizeWeightSelector from "./SizeWeightSelector";
-import ProductTitle from "./ProductTitle";
 import ProductDescription from "./ProductDescription";
 import QuantitySelector from "./QuantitySelector";
-import { ShareDialog } from "../cart/ShareDialog";
-import { Button } from "../ui/button";
-import { Share2 } from "lucide-react";
+import { ShareDialog } from "./share/ShareDialog";
+import { ProductHeader } from "./header/ProductHeader";
 
 interface ProductInfoProps {
   product: Product;
@@ -28,22 +26,12 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <ProductTitle 
-          name={product.name} 
-          price={selectedPrice}
-          quantity={quantity}
-          total={selectedPrice * quantity}
-        />
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setShareDialogOpen(true)}
-          className="ml-4"
-        >
-          <Share2 className="h-4 w-4" />
-        </Button>
-      </div>
+      <ProductHeader 
+        name={product.name}
+        price={selectedPrice}
+        quantity={quantity}
+        onShareClick={() => setShareDialogOpen(true)}
+      />
       <ProductDescription description={product.description} />
       <QuantitySelector
         quantity={quantity}
