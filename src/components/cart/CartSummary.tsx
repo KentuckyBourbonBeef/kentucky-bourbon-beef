@@ -7,6 +7,7 @@ import { useSubscriptionPlans } from "@/hooks/use-subscription-plans";
 import { useCheckout } from "@/hooks/use-checkout";
 import { useState } from "react";
 import { useCart } from "@/contexts/CartContext";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CartSummaryProps {
   total: number;
@@ -20,10 +21,22 @@ export function CartSummary({ total, onCheckout }: CartSummaryProps) {
   const { items } = useCart();
 
   const initiateCheckout = async () => {
-    const checkoutUrl = await handleCheckout(selectedPlanId, items);
-    
-    if (checkoutUrl) {
-      window.location.href = checkoutUrl;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast.error("Please sign in to complete your purchase");
+        return;
+      }
+
+      const checkoutUrl = await handleCheckout(selectedPlanId, items);
+      
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast.error("Failed to start checkout. Please try again.");
     }
   };
 
