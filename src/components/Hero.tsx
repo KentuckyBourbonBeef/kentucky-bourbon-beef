@@ -14,8 +14,13 @@ const Hero = () => {
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2">
           Kentucky Bourbon Beef
         </h1>
-        <div className="font-serif italic text-bourbon-400 text-lg md:text-2xl mb-8">
-          BDC Butcher Distillers Cut<span className="font-sans text-[0.7em] tracking-wider align-super ml-0.5">™</span>
+        <div className="inline-block relative">
+          <div className="font-serif italic text-bourbon-400 text-lg md:text-2xl mb-8 font-bold relative px-8 py-2
+            before:content-[''] before:absolute before:inset-0 before:border-2 before:border-bourbon-400/30
+            after:content-[''] after:absolute after:inset-[3px] after:border after:border-bourbon-400/60
+            [text-shadow:_2px_2px_2px_rgb(0_0_0_/_20%)]">
+            BDC Butcher Distillers Cut<span className="font-sans text-[0.7em] tracking-wider align-super ml-0.5 font-normal">™</span>
+          </div>
         </div>
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
           Experience the pinnacle of flavor where Kentucky's bourbon heritage meets premium dry-aged beef.
