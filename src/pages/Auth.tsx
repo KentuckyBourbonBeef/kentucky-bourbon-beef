@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SignInForm } from "@/components/auth/SignInForm";
 import { SignUpForm } from "@/components/auth/SignUpForm";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,19 +24,13 @@ const Auth = () => {
             Premium dry-aged beef with bourbon heritage
           </p>
         </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
-            </TabsList>
-            <TabsContent value="signin">
-              <SignInForm isLoading={isLoading} setIsLoading={setIsLoading} />
-            </TabsContent>
-            <TabsContent value="signup">
-              <SignUpForm isLoading={isLoading} setIsLoading={setIsLoading} />
-            </TabsContent>
-          </Tabs>
+        <CardContent className="space-y-4">
+          <Alert>
+            <AlertDescription>
+              New to Kentucky Bourbon Beef? Please sign up to create an account.
+            </AlertDescription>
+          </Alert>
+          <SignUpForm isLoading={isLoading} setIsLoading={setIsLoading} />
         </CardContent>
       </Card>
     </div>
