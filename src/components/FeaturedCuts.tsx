@@ -5,6 +5,7 @@ import { ProductLoadingState } from "./product/ProductLoadingState";
 import { ProductErrorState } from "./product/ProductErrorState";
 import { BackButton } from "./product/BackButton";
 import { FeaturedProductCard } from "./product/FeaturedProductCard";
+import { Product } from "@/types/product";
 
 const FeaturedCuts = () => {
   const { data: products, isLoading, error } = useProducts();
@@ -16,7 +17,7 @@ const FeaturedCuts = () => {
 
   const featuredProducts = products?.slice(0, 3) || [];
 
-  const handleAddToCart = (product: any, e: React.MouseEvent) => {
+  const handleAddToCart = (product: Product, e: React.MouseEvent) => {
     addItem(product);
     toast({
       title: "Added to cart",
