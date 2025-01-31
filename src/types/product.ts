@@ -7,23 +7,23 @@ export type PricingTier = {
   price_per_unit: number;
 };
 
-export type Product = {
+export interface Product {
   id: string;
   name: string;
-  description?: string;
+  description?: string | null;
   price: number;
   category: ProductCategory;
-  image_url?: string;
-  aging_duration?: number;
-  aging_tier?: string;
-  is_bdc_certified?: boolean;
-  stock_quantity?: number;
-  wholesale_price?: number;
-  minimum_wholesale_quantity?: number;
-  pricing_tiers?: PricingTier[];
+  image_url?: string | null;
+  aging_duration?: number | null;
+  aging_tier?: string | null;
+  is_bdc_certified?: boolean | null;
+  stock_quantity?: number | null;
+  wholesale_price?: number | null;
+  minimum_wholesale_quantity?: number | null;
+  pricing_tiers?: PricingTier[] | null;
   created_at: string;
   updated_at: string;
-};
+}
 
 export type CartItem = Product & {
   quantity: number;
