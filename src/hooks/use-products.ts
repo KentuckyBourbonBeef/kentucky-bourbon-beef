@@ -14,8 +14,7 @@ export const useProducts = () => {
         throw error;
       }
       
-      // Convert the JSON pricing_tiers to PricingTier[]
-      const products = data.map(product => ({
+      return data.map(product => ({
         ...product,
         pricing_tiers: product.pricing_tiers ? 
           (typeof product.pricing_tiers === 'string' ? 
@@ -23,8 +22,6 @@ export const useProducts = () => {
             product.pricing_tiers) as PricingTier[] : 
           null
       })) as Product[];
-      
-      return products;
     },
   });
 };
