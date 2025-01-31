@@ -12,7 +12,7 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
-  category: string;  // Changed from ProductCategory to string
+  category: ProductCategory | string;
   image_url?: string | null;
   aging_duration?: number | null;
   aging_tier?: string | null;
