@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SignInForm } from "@/components/auth/SignInForm";
 import { SignUpForm } from "@/components/auth/SignUpForm";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
 
   return (
     <div 
@@ -25,12 +28,38 @@ const Auth = () => {
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert>
-            <AlertDescription>
-              New to Kentucky Bourbon Beef? Please sign up to create an account.
-            </AlertDescription>
-          </Alert>
-          <SignUpForm isLoading={isLoading} setIsLoading={setIsLoading} />
+          {showSignIn ? (
+            <>
+              <SignInForm isLoading={isLoading} setIsLoading={setIsLoading} />
+              <div className="text-center">
+                <Button
+                  variant="link"
+                  onClick={() => setShowSignIn(false)}
+                  className="text-bourbon-600 hover:text-bourbon-700"
+                >
+                  New to Kentucky Bourbon Beef? Sign up here
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <Alert>
+                <AlertDescription>
+                  New to Kentucky Bourbon Beef? Please sign up to create an account.
+                </AlertDescription>
+              </Alert>
+              <SignUpForm isLoading={isLoading} setIsLoading={setIsLoading} />
+              <div className="text-center">
+                <Button
+                  variant="link"
+                  onClick={() => setShowSignIn(true)}
+                  className="text-bourbon-600 hover:text-bourbon-700"
+                >
+                  Already have an account? Sign in here
+                </Button>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
