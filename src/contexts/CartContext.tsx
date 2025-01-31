@@ -66,3 +66,5 @@ export function useCart() {
   }
   return context;
 }
+
+export type { CartItem };
