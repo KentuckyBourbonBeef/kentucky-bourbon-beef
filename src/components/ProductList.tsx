@@ -4,7 +4,7 @@ import { useCart } from "@/contexts/CartContext";
 import SearchFilters from "./product/SearchFilters";
 import ProductListSkeleton from "./product/ProductListSkeleton";
 import { filterProducts, sortProducts } from "@/utils/productSearch";
-import { ProductCategory, SortOption } from "@/types/product";
+import { Product, ProductCategory, SortOption } from "@/types/product";
 import { Separator } from "./ui/separator";
 import ProductHeader from "./product/ProductHeader";
 import ProductGrid from "./product/ProductGrid";

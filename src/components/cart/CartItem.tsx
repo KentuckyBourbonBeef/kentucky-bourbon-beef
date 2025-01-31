@@ -3,6 +3,7 @@ import { CartItem as CartItemType } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "./shared/ProductCard";
+import { Product } from "@/types/product";
 
 interface CartItemProps {
   item: CartItemType;
@@ -54,7 +55,7 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
   return (
     <div className="flex items-center space-x-2">
       <ProductCard
-        product={item}
+        product={item as Product & { quantity?: number }}
         actionIcon={<X className="h-4 w-4" />}
         onActionClick={() => onRemoveItem(item.id)}
         showQuantityControls
