@@ -899,6 +899,7 @@ export type Database = {
           minimum_wholesale_quantity: number | null
           name: string
           price: number
+          pricing_tiers: Json | null
           stock_quantity: number | null
           updated_at: string
           wholesale_price: number | null
@@ -915,6 +916,7 @@ export type Database = {
           minimum_wholesale_quantity?: number | null
           name: string
           price: number
+          pricing_tiers?: Json | null
           stock_quantity?: number | null
           updated_at?: string
           wholesale_price?: number | null
@@ -931,6 +933,7 @@ export type Database = {
           minimum_wholesale_quantity?: number | null
           name?: string
           price?: number
+          pricing_tiers?: Json | null
           stock_quantity?: number | null
           updated_at?: string
           wholesale_price?: number | null
@@ -1426,6 +1429,128 @@ export type Database = {
           },
         ]
       }
+      saved_addresses: {
+        Row: {
+          address_line1: string
+          address_line2: string | null
+          city: string
+          country: string
+          created_at: string | null
+          customer_id: string
+          id: string
+          is_default: boolean | null
+          postal_code: string
+          state: string
+          updated_at: string | null
+        }
+        Insert: {
+          address_line1: string
+          address_line2?: string | null
+          city: string
+          country?: string
+          created_at?: string | null
+          customer_id: string
+          id?: string
+          is_default?: boolean | null
+          postal_code: string
+          state: string
+          updated_at?: string | null
+        }
+        Update: {
+          address_line1?: string
+          address_line2?: string | null
+          city?: string
+          country?: string
+          created_at?: string | null
+          customer_id?: string
+          id?: string
+          is_default?: boolean | null
+          postal_code?: string
+          state?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_addresses_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saved_items: {
+        Row: {
+          created_at: string | null
+          customer_id: string
+          id: string
+          product_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          customer_id: string
+          id?: string
+          product_id: string
+        }
+        Update: {
+          created_at?: string | null
+          customer_id?: string
+          id?: string
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_items_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "saved_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscription_plans: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          features: Json
+          id: string
+          interval: string
+          name: string
+          price: number
+          stripe_price_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          features?: Json
+          id?: string
+          interval: string
+          name: string
+          price: number
+          stripe_price_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          features?: Json
+          id?: string
+          interval?: string
+          name?: string
+          price?: number
+          stripe_price_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       tour_hotspots: {
         Row: {
           audio_url: string | null
@@ -1496,7 +1621,7 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      product_category: "beef" | "pork" | "poultry" | "seafood" | "other"
     }
     CompositeTypes: {
       [_ in never]: never

@@ -21,12 +21,12 @@ interface AddressFormProps {
 const AddressForm = ({ customerId, onSuccess, onCancel }: AddressFormProps) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    address_type: "",
     address_line1: "",
     address_line2: "",
     city: "",
     state: "",
     postal_code: "",
+    address_type: "",
   });
   const { toast } = useToast();
 
@@ -43,10 +43,12 @@ const AddressForm = ({ customerId, onSuccess, onCancel }: AddressFormProps) => {
     setLoading(true);
 
     try {
-      const { error } = await supabase.from("saved_addresses").insert({
-        ...formData,
-        customer_id: customerId,
-      });
+      const { error } = await supabase
+        .from("saved_addresses")
+        .insert({
+          ...formData,
+          customer_id: customerId,
+        });
 
       if (error) throw error;
 
