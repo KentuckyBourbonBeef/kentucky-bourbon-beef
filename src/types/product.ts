@@ -31,6 +31,6 @@ export interface Product {
   updated_at: string;
 }
 
-export type CartItem = Product & {
+export interface CartItem extends Product {
   quantity: number;
-};
+}
