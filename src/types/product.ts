@@ -1,11 +1,17 @@
-export type ProductCategory = 'ribeye' | 'strip' | 'tenderloin' | 'tomahawk' | 'tbone' | 'porterhouse';
+export type ProductCategory = 
+  | 'ribeye' 
+  | 'strip' 
+  | 'tenderloin' 
+  | 'tomahawk' 
+  | 'tbone' 
+  | 'porterhouse';
 
 export type SortOption = 'name' | 'price-asc' | 'price-desc';
 
-export type PricingTier = {
+export interface PricingTier {
   quantity: number;
   price_per_unit: number;
-};
+}
 
 export interface Product {
   id: string;
