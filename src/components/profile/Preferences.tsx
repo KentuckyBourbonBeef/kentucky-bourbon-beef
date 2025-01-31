@@ -1,74 +1,54 @@
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
+import { Dispatch, SetStateAction } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
-const Preferences = () => {
-  const [loading, setLoading] = useState(false);
+interface PreferencesProps {
+  customerData: any;
+  setCustomerData: Dispatch<SetStateAction<any>>;
+}
+
+const Preferences = ({ customerData, setCustomerData }: PreferencesProps) => {
   const { toast } = useToast();
 
-  const handleUpdatePreferences = async (preferences: any) => {
-    try {
-      setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+  const handleToggleWholesale = async (checked: boolean) => {
+    const { error } = await supabase
+      .from('customers')
+      .update({ approved_for_wholesale: checked })
+      .eq('id', customerData.id);
 
-      const { error } = await supabase
-        .from('customers')
-        .update({
-          approved_for_wholesale: preferences.approved_for_wholesale,
-          is_restaurant: preferences.is_restaurant,
-        })
-        .eq('id', user.id);
-
-      if (error) throw error;
-
+    if (error) {
       toast({
-        title: "Success",
-        description: "Your preferences have been updated.",
-      });
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
         title: "Error",
-        description: error.message,
+        description: "Failed to update preferences",
+        variant: "destructive",
       });
-    } finally {
-      setLoading(false);
+      return;
     }
+
+    setCustomerData({ ...customerData, approved_for_wholesale: checked });
+    toast({
+      title: "Success",
+      description: "Preferences updated successfully",
+    });
   };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <Label htmlFor="wholesale">Request Wholesale Access</Label>
+        <Label htmlFor="wholesale" className="flex flex-col space-y-1">
+          <span>Wholesale Account</span>
+          <span className="text-sm text-gray-500">
+            Enable wholesale pricing and bulk ordering
+          </span>
+        </Label>
         <Switch
           id="wholesale"
-          onCheckedChange={(checked) =>
-            handleUpdatePreferences({ approved_for_wholesale: checked })
-          }
+          checked={customerData.approved_for_wholesale || false}
+          onCheckedChange={handleToggleWholesale}
         />
       </div>
-
-      <div className="flex items-center justify-between">
-        <Label htmlFor="restaurant">Register as Restaurant</Label>
-        <Switch
-          id="restaurant"
-          onCheckedChange={(checked) =>
-            handleUpdatePreferences({ is_restaurant: checked })
-          }
-        />
-      </div>
-
-      <Button
-        onClick={() => handleUpdatePreferences({})}
-        disabled={loading}
-        className="w-full"
-      >
-        {loading ? "Saving..." : "Save Preferences"}
-      </Button>
     </div>
   );
 };

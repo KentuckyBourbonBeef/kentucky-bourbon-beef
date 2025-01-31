@@ -1,4 +1,4 @@
-export type ProductCategory = 'beef' | 'pork' | 'poultry' | 'seafood' | 'other';
+export type ProductCategory = 'ribeye' | 'strip' | 'tenderloin' | 'tomahawk' | 'tbone' | 'porterhouse';
 
 export type SortOption = 'name' | 'price-asc' | 'price-desc';
 
