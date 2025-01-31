@@ -8,6 +8,7 @@ import Preferences from "@/components/profile/Preferences";
 
 const Profile = () => {
   const [customerData, setCustomerData] = useState<any>(null);
+  const [customerId, setCustomerId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCustomerData = async () => {
@@ -19,13 +20,14 @@ const Profile = () => {
           .eq('id', user.id)
           .single();
         setCustomerData(data);
+        setCustomerId(user.id);
       }
     };
 
     fetchCustomerData();
   }, []);
 
-  if (!customerData) {
+  if (!customerData || !customerId) {
     return <div>Loading...</div>;
   }
 
@@ -43,10 +45,10 @@ const Profile = () => {
           <PersonalInfo customerData={customerData} setCustomerData={setCustomerData} />
         </TabsContent>
         <TabsContent value="addresses">
-          <AddressBook />
+          <AddressBook customerId={customerId} />
         </TabsContent>
         <TabsContent value="orders">
-          <OrderHistory />
+          <OrderHistory customerId={customerId} />
         </TabsContent>
         <TabsContent value="preferences">
           <Preferences customerData={customerData} setCustomerData={setCustomerData} />
